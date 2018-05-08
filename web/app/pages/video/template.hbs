@@ -1,0 +1,16 @@
+<document>
+	<stackTemplate theme="light">
+		<collectionList>
+			<grid>
+				<section>
+					{{#each data }}
+					<lockup data-href-page="years" data-href-page-options="{{toJSON (add_collection this ../collection)}}">
+						<img class="tile" src="https://archive.org/services/get-item-image.php?identifier={{identifier}}"/>
+						<title class="text-center">{{ title }} ({{ downloads }})</title>
+					</lockup>
+					{{/each}}
+				</section>
+			</grid>
+		</collectionList>
+	</stackTemplate>
+</document>

@@ -1,0 +1,21 @@
+.scrollTextOnHighlight {
+    tv-text-highlight-style: marquee-on-highlight;
+}
+.showAndScrollTextOnHighlight {
+    tv-text-highlight-style: marquee-and-show-on-highlight;
+}
+.tile {
+    width: 330;
+    height: 330;
+}
+.tile_compact {
+    width: 300;
+    height: 300;
+}
+.tile_large {
+    width: 370;
+    height: 370;
+}
+.text-center {
+    text-align: center;
+}

@@ -1,0 +1,18 @@
+<document>
+	<showcaseTemplate mode="showcase" theme="light">
+		<background/>
+		<banner>
+			<title>{{title}}</title>
+		</banner>
+		<carousel>
+			<section>
+				{{#each data }}
+				<lockup data-href-page="year-items" data-href-page-options="{{toJSON this}}">
+					<img class="tile" src="https://archive.org/services/get-item-image.php?identifier={{../identifier}}"/>
+					<title class="text-center">{{ this.0.year }} ({{ this.length }})</title>
+				</lockup>
+				{{/each}}
+			</section>
+		</carousel>
+	</showcaseTemplate>
+</document>
