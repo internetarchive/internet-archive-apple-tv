@@ -242,8 +242,8 @@
 				LD_RUNPATH_SEARCH_PATHS = "$(inherited) @executable_path/Frameworks";
 				PRODUCT_BUNDLE_IDENTIFIER = com.archive.org.archivetv;
 				PRODUCT_NAME = "$(TARGET_NAME)";
-				PROVISIONING_PROFILE = "cb547cd6-ca85-4036-a3df-82d88746c778";
-				PROVISIONING_PROFILE_SPECIFIER = atv_dev0503;
+				PROVISIONING_PROFILE = "0334456f-bdda-4ba1-943b-3d9c371a68f1";
+				PROVISIONING_PROFILE_SPECIFIER = tvOS_All_Pro;
 				SWIFT_VERSION = 3.0;
 			};
 			name = Debug;

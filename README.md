@@ -12,7 +12,8 @@ $ npm install                           # Install dependencies
 Builds the application and starts a webserver. By default the webserver starts at port 9001.
 
 ```shell
-$ npm start # development
+$ npm run dev # development
+$ npm start # production
 ```
 ### Structure
 The project is split into two parts:

@@ -18,6 +18,8 @@ import YearsPage from 'pages/years';
 import YearItemsPage from 'pages/year-items';
 import PlayPage from 'pages/play';
 import AccountPage from 'pages/account';
+import LoginPage from 'pages/login';
+import SignupPage from 'pages/signup';
 
 ATV.start({
 	style: css,
@@ -61,6 +63,13 @@ ATV.start({
 		}
 	},
 	onLaunch(options) {
-		ATV.Navigation.navigateToMenuPage();
+		let loggedIn = ATV.Settings.get('loggedIn');
+		
+		// if (loggedIn) {
+			ATV.Navigation.navigateToMenuPage();
+		// } else {
+		// 	ATV.Navigation.navigate('login');
+		// }
+		
 	}
 });
