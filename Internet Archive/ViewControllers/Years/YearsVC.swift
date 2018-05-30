@@ -1,5 +1,5 @@
 //
-//  ViewController.swift
+//  YearsVC.swift
 //  Internet Archive
 //
 //  Created by Eagle19243 on 5/8/18.
@@ -7,10 +7,13 @@
 //
 
 import UIKit
-import MBProgressHUD
+import SVProgressHUD
 import AlamofireImage
 
-class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout {
+    
+    @IBOutlet weak var tableView: UITableView!
+    @IBOutlet weak var collectionView: UICollectionView!
     
     var name = ""
     var identifier = ""
@@ -18,19 +21,23 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     var sortedData:[String: [[String: Any]]] = [:]
     var sortedKeys = [String]()
     
-    @IBOutlet weak var txtTitle: UILabel!
-    @IBOutlet weak var collectionView: UICollectionView!
+    private var selectedRow = 0
+    private let screenSize = UIScreen.main.bounds.size
     
     override func viewDidLoad() {
         super.viewDidLoad()
     }
     
+    override func viewWillAppear(_ animated: Bool) {
+        tableView.isHidden = true
+        collectionView.isHidden = true
+    }
+    
     override func viewDidAppear(_ animated: Bool) {
-        txtTitle.text = name
+        SVProgressHUD.show()
         
-        MBProgressHUD.showAdded(to: self.view, animated: true)
         APIManager.sharedManager.getCollections(collection: identifier, result_type: collection, limit: nil) { (collection, data, err) in
-            MBProgressHUD.hide(for: self.view, animated: true)
+            SVProgressHUD.dismiss()
             
             if let data = data {
                 self.collection = collection
@@ -53,30 +60,66 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                     return a < b
                 })
                 
-                self.collectionView?.reloadData()
+                self.tableView.reloadData()
+                self.tableView.isHidden = false
+                self.collectionView.isHidden = false
             } else {
                 Global.showAlert(title: "Error", message: "Error occurred while downloading videos", target: self)
             }
         }
     }
     
-    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+    // MARK: - UITableView datasource, delegate
+    func numberOfSections(in tableView: UITableView) -> Int {
+        return 1
+    }
+    
+    func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
         return sortedKeys.count
     }
     
-    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
-        let itemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCell", for: indexPath as IndexPath) as! ItemCell
+    func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
+        let yearCell = tableView.dequeueReusableCell(withIdentifier: "YearCell", for: indexPath) as! YearCell
+        yearCell.lblYear.text = sortedKeys[indexPath.row]
         
-        itemCell.itemTitle.text = sortedKeys[indexPath.row]
-        let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(identifier)")
+        return yearCell
+    }
+    
+    func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
+        selectedRow = indexPath.row
+        collectionView.reloadData()
+    }
+    
+    // MARK: - UICollectionView datasource, delegate
+    func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
+        if sortedData.count == 0 {
+            return 0
+        } else {
+            return (sortedData[sortedKeys[selectedRow]]?.count)!
+        }
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
+        let itemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCell", for: indexPath) as! ItemCell
+        
+        let data = sortedData[sortedKeys[selectedRow]]![indexPath.row]
+        itemCell.itemTitle.text = data["title"] as? String
+        let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(data["identifier"] as! String)")
         itemCell.itemImage.af_setImage(withURL: imageURL!)
         
         return itemCell
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let nc = self.navigationController as! BaseNC
-        nc.gotoYearItemsVC(year: sortedKeys[indexPath.row], items: sortedData[sortedKeys[indexPath.row]]!, collection: collection)
+//        let nc = self.navigationController as! BaseNC
+//        nc.gotoYearItemsVC(year: sortedKeys[indexPath.row], items: sortedData[sortedKeys[indexPath.row]]!, collection: collection)
+    }
+    
+    func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
+        let width = (screenSize.width / 4) - 100
+        let height = width + 145
+        let cellSize = CGSize(width: width, height: height)
+        return cellSize
     }
 }
 

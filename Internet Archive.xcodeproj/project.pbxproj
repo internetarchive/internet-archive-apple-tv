@@ -16,10 +16,13 @@
 		C3260C7D20A22CE300C32ACA /* AccountVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3260C7A20A22CE300C32ACA /* AccountVC.swift */; };
 		C3827AEF20A4738A000D4780 /* MusicNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3827AEE20A4738A000D4780 /* MusicNC.swift */; };
 		C3827AF120A47392000D4780 /* VideoNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3827AF020A47392000D4780 /* VideoNC.swift */; };
-		C3827AF520A47A81000D4780 /* YearsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3827AF420A47A81000D4780 /* YearsVC.swift */; };
+		C3827AF520A47A81000D4780 /* YearsVC1.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3827AF420A47A81000D4780 /* YearsVC1.swift */; };
 		C3827AF720A47A89000D4780 /* YearItemsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3827AF620A47A89000D4780 /* YearItemsVC.swift */; };
 		C3827AF920A4ADE4000D4780 /* BaseNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3827AF820A4ADE4000D4780 /* BaseNC.swift */; };
 		C393F4CD20A2CDE900E58ED9 /* Global.swift in Sources */ = {isa = PBXBuildFile; fileRef = C393F4CC20A2CDE900E58ED9 /* Global.swift */; };
+		C39588C120BE0C4000BB23C5 /* YearsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39588C020BE0C4000BB23C5 /* YearsVC.swift */; };
+		C39588C320BE116500BB23C5 /* YearCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39588C220BE116500BB23C5 /* YearCell.swift */; };
+		C39588C620BE35A200BB23C5 /* ItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39588C520BE35A200BB23C5 /* ItemVC.swift */; };
 		C3DD648220A22DFA0056DEC1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DD648120A22DFA0056DEC1 /* LoginVC.swift */; };
 		C3DD648420A22E1A0056DEC1 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DD648320A22E1A0056DEC1 /* RegisterVC.swift */; };
 		C3DD648720A233B20056DEC1 /* AccountNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DD648620A233B20056DEC1 /* AccountNC.swift */; };
@@ -42,11 +45,14 @@
 		C3260C7A20A22CE300C32ACA /* AccountVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = AccountVC.swift; sourceTree = "<group>"; };
 		C3827AEE20A4738A000D4780 /* MusicNC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = MusicNC.swift; sourceTree = "<group>"; };
 		C3827AF020A47392000D4780 /* VideoNC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = VideoNC.swift; sourceTree = "<group>"; };
-		C3827AF420A47A81000D4780 /* YearsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearsVC.swift; sourceTree = "<group>"; };
+		C3827AF420A47A81000D4780 /* YearsVC1.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearsVC1.swift; sourceTree = "<group>"; };
 		C3827AF620A47A89000D4780 /* YearItemsVC.swift */ = {isa = PBXFileReference; fileEncoding = 4; lastKnownFileType = sourcecode.swift; path = YearItemsVC.swift; sourceTree = "<group>"; };
 		C3827AF820A4ADE4000D4780 /* BaseNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = BaseNC.swift; sourceTree = "<group>"; };
 		C393F4CC20A2CDE900E58ED9 /* Global.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Global.swift; sourceTree = "<group>"; };
 		C393F4CE20A2CEAC00E58ED9 /* Internet Archive.entitlements */ = {isa = PBXFileReference; lastKnownFileType = text.plist.entitlements; path = "Internet Archive.entitlements"; sourceTree = "<group>"; };
+		C39588C020BE0C4000BB23C5 /* YearsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearsVC.swift; sourceTree = "<group>"; };
+		C39588C220BE116500BB23C5 /* YearCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCell.swift; sourceTree = "<group>"; };
+		C39588C520BE35A200BB23C5 /* ItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVC.swift; sourceTree = "<group>"; };
 		C3DD648120A22DFA0056DEC1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		C3DD648320A22E1A0056DEC1 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		C3DD648620A233B20056DEC1 /* AccountNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountNC.swift; sourceTree = "<group>"; };
@@ -122,6 +128,7 @@
 		C3260C7E20A22CF100C32ACA /* ViewControllers */ = {
 			isa = PBXGroup;
 			children = (
+				C39588C420BE358400BB23C5 /* Item */,
 				C3827AF320A475E9000D4780 /* YearItems */,
 				C3827AF220A475E0000D4780 /* Years */,
 				C3DD648A20A235E70056DEC1 /* Search */,
@@ -135,7 +142,9 @@
 		C3827AF220A475E0000D4780 /* Years */ = {
 			isa = PBXGroup;
 			children = (
-				C3827AF420A47A81000D4780 /* YearsVC.swift */,
+				C3827AF420A47A81000D4780 /* YearsVC1.swift */,
+				C39588C020BE0C4000BB23C5 /* YearsVC.swift */,
+				C39588C220BE116500BB23C5 /* YearCell.swift */,
 			);
 			path = Years;
 			sourceTree = "<group>";
@@ -146,6 +155,14 @@
 				C3827AF620A47A89000D4780 /* YearItemsVC.swift */,
 			);
 			path = YearItems;
+			sourceTree = "<group>";
+		};
+		C39588C420BE358400BB23C5 /* Item */ = {
+			isa = PBXGroup;
+			children = (
+				C39588C520BE35A200BB23C5 /* ItemVC.swift */,
+			);
+			path = Item;
 			sourceTree = "<group>";
 		};
 		C3DD648520A233860056DEC1 /* Account */ = {
@@ -288,13 +305,13 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Internet Archive/Pods-Internet Archive-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
-				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
-				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -344,6 +361,8 @@
 				C3827AF720A47A89000D4780 /* YearItemsVC.swift in Sources */,
 				C3260C7B20A22CE300C32ACA /* SearchResultVC.swift in Sources */,
 				C3827AF920A4ADE4000D4780 /* BaseNC.swift in Sources */,
+				C39588C320BE116500BB23C5 /* YearCell.swift in Sources */,
+				C39588C120BE0C4000BB23C5 /* YearsVC.swift in Sources */,
 				C3DD648420A22E1A0056DEC1 /* RegisterVC.swift in Sources */,
 				C3260C7D20A22CE300C32ACA /* AccountVC.swift in Sources */,
 				C3DD649220A24FFD0056DEC1 /* ItemCell.swift in Sources */,
@@ -355,9 +374,10 @@
 				C3827AEF20A4738A000D4780 /* MusicNC.swift in Sources */,
 				C3260C7C20A22CE300C32ACA /* MusicVC.swift in Sources */,
 				C3827AF120A47392000D4780 /* VideoNC.swift in Sources */,
-				C3827AF520A47A81000D4780 /* YearsVC.swift in Sources */,
+				C3827AF520A47A81000D4780 /* YearsVC1.swift in Sources */,
 				C3260C6A20A2287F00C32ACA /* AppDelegate.swift in Sources */,
 				C3DD648F20A2382B0056DEC1 /* AppConstants.swift in Sources */,
+				C39588C620BE35A200BB23C5 /* ItemVC.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 		};

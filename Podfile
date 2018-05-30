@@ -7,6 +7,6 @@ target 'Internet Archive' do
 
   # Pods for Internet Archive
   pod 'Alamofire'
-  pod 'MBProgressHUD'
   pod 'AlamofireImage', '~> 3.3'
+  pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
 end

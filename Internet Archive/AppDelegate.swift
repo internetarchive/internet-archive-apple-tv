@@ -20,6 +20,8 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
             tabController.viewControllers?.insert(packagedSearchController(), at: 2)
         }
         
+        setTabbarStyle()
+        
         return true
     }
     
@@ -49,6 +51,12 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         // Finally contain the `UISearchContainerViewController` in a `UINavigationController`.
         let searchNavigationController = UINavigationController(rootViewController: searchContainer)
         return searchNavigationController
+    }
+    
+    func setTabbarStyle() -> Void {
+        let appearance = UITabBarItem.appearance()
+        let attributes = [NSAttributedStringKey.font: UIFont.boldSystemFont(ofSize: 42)]
+        appearance.setTitleTextAttributes(attributes, for: .normal)
     }
 
     func applicationWillResignActive(_ application: UIApplication) {

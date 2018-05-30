@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MBProgressHUD
+import SVProgressHUD
 
 class RegisterVC: UIViewController {
 
@@ -27,7 +27,7 @@ class RegisterVC: UIViewController {
             return
         }
         
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        SVProgressHUD.show()
         
         let email = txtEmail.text!
         let password = txtPassword.text!
@@ -39,7 +39,7 @@ class RegisterVC: UIViewController {
             "screenname" : username,
             "verified" : false
         ]) { (data) in
-            MBProgressHUD.hide(for: self.view, animated: true)
+            SVProgressHUD.dismiss()
             
             if data == nil {
                 Global.showAlert(title: "Error", message: "Server error", target: self)

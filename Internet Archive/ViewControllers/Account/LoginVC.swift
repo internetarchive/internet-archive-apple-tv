@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MBProgressHUD
+import SVProgressHUD
 
 class LoginVC: UIViewController {
 
@@ -25,21 +25,21 @@ class LoginVC: UIViewController {
             return
         }
         
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        SVProgressHUD.show()
         
         let email = txtEmail.text!
         let password = txtPassword.text!
         
         APIManager.sharedManager.login(email: email, password: password) { (data) in
             if data == nil {
-                MBProgressHUD.hide(for: self.view, animated: true)
+                SVProgressHUD.dismiss()
                 Global.showAlert(title: "Error", message: "Server error", target: self)
                 return
             }
             
             if data!["success"] as! Bool {
                 APIManager.sharedManager.getAccountInfo(email: email, completion: { (data) in
-                    MBProgressHUD.hide(for: self.view, animated: true)
+                    SVProgressHUD.dismiss()
                     
                     let values = data!["values"] as! [String: Any]
                     let username = values["screenname"] as! String
@@ -55,7 +55,7 @@ class LoginVC: UIViewController {
                     accountNC?.gotoAccountVC()
                 })
             } else {
-                MBProgressHUD.hide(for: self.view, animated: true)
+                SVProgressHUD.dismiss()
                 Global.showAlert(title: "Error", message: "Login failed", target: self)
             }
         }

@@ -9,7 +9,7 @@
 import UIKit
 import AVKit
 import AVFoundation
-import MBProgressHUD
+import SVProgressHUD
 
 class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
     
@@ -45,10 +45,10 @@ class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
     func openPlayer(identifier: String, title: String) -> Void {
         var filesToPlay = [[String: Any]]()
         
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        SVProgressHUD.show()
         
         APIManager.sharedManager.getMetaData(identifier: identifier) { (data, err) in
-            MBProgressHUD.hide(for: self.view, animated: true)
+            SVProgressHUD.dismiss()
             
             if let data = data {
                 for file in data["files"] as! [[String: Any]] {

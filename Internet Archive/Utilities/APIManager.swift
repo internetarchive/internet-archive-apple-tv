@@ -95,7 +95,7 @@ class APIManager: NSObject {
     func getCollections(collection: String, result_type: String, limit: Int?, completion: @escaping (_ collection: String, _ data: [[String: Any]]?, _ err: Int?) -> Void) {
         var options = [
             "rows" : "1",
-            "fl[]" : "identifier,title,year,downloads,week"]
+            "fl[]" : "identifier,title,year,downloads,date"]
         
         if limit != nil {
             options["rows"] = "\(limit!)"

@@ -8,7 +8,7 @@
 
 import UIKit
 import AVKit
-import MBProgressHUD
+import SVProgressHUD
 
 class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
@@ -29,7 +29,7 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
             if trimedQuery.isEmpty { return }
             // Apply the filter or show all items if the filter string is empty.
             
-            MBProgressHUD.showAdded(to: self.view, animated: true)
+            SVProgressHUD.show()
             
             let options = [
                 "rows": "50",
@@ -59,7 +59,7 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
                 self.clsVideo.reloadData()
                 self.clsMusic.reloadData()
                 
-                MBProgressHUD.hide(for: self.view, animated: true)
+                SVProgressHUD.dismiss()
             })
         }
     }
@@ -113,10 +113,10 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
         let title = items[indexPath.row]["title"] as! String
         var filesToPlay = [[String: Any]]()
         
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        SVProgressHUD.show()
         
         APIManager.sharedManager.getMetaData(identifier: identifier) { (data, err) in
-            MBProgressHUD.hide(for: self.view, animated: true)
+            SVProgressHUD.dismiss()
             
             if let data = data {
                 for file in data["files"] as! [[String: Any]] {

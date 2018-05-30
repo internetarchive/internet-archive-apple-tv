@@ -7,7 +7,7 @@
 //
 
 import UIKit
-import MBProgressHUD
+import SVProgressHUD
 
 class MusicVC: UICollectionViewController {
 
@@ -19,9 +19,9 @@ class MusicVC: UICollectionViewController {
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        MBProgressHUD.showAdded(to: self.view, animated: true)
+        SVProgressHUD.show()
         APIManager.sharedManager.getCollections(collection: "etree", result_type: "collection", limit: nil) { (collection, data, err) in
-            MBProgressHUD.hide(for: self.view, animated: true)
+            SVProgressHUD.dismiss()
             
             if let data = data {
                 self.collection = collection
@@ -47,8 +47,8 @@ class MusicVC: UICollectionViewController {
     
     override func collectionView(_ collectionView: UICollectionView, cellForItemAt indexPath: IndexPath) -> UICollectionViewCell {
         let itemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCell", for: indexPath as IndexPath) as! ItemCell
-        itemCell.itemTitle.text = "\(items[indexPath.row]["title"]!)(\(items[indexPath.row]["downloads"]!)"
-        
+        itemCell.itemTitle.text = "\(items[indexPath.row]["title"]!)"
+        itemCell.itemDownloads.text = "(\(items[indexPath.row]["downloads"]!))"
         let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(items[indexPath.row]["identifier"] as! String)")
         itemCell.itemImage.af_setImage(withURL: imageURL!)
         
