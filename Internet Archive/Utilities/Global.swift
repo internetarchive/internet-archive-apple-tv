@@ -20,6 +20,24 @@ class Global: NSObject {
         return UserDefaults.standard.value(forKey: "UserData") as? [String : Any?]
     }
     
+    static func saveFavoriteData(identifer: String) {
+        var favorites = getFavoriteData()
+        
+        if  favorites == nil {
+            UserDefaults.standard.set([identifer], forKey: "FavoriteData")
+        } else {
+            if !(favorites?.contains(identifer))! {
+                favorites?.append(identifer)
+                UserDefaults.standard.set(favorites, forKey: "FavoriteData")
+            }
+        }
+    }
+    
+    static func getFavoriteData() -> [String]? {
+        let ret = UserDefaults.standard.stringArray(forKey: "FavoriteData")
+        return ret
+    }
+    
     static func isLoggedIn() -> Bool {
         if let userData = self.getUserData(),
             let isLoggedin = userData["logged-in"] as? Bool,
@@ -36,5 +54,22 @@ class Global: NSObject {
             
         })
         target.present(alertController, animated: true)
+    }
+    
+    static func formatDate(string: String?) -> String? {
+        if string == nil {
+            return nil
+        }
+        
+        let dateFormatter = DateFormatter()
+        dateFormatter.locale = Locale(identifier: "en_US_POSIX")
+        dateFormatter.dateFormat = "yyyy-MM-dd'T'HH:mm:ssZ"
+        let date = dateFormatter.date(from: string!)
+        
+        let dateFormatterPrint = DateFormatter()
+        dateFormatterPrint.dateFormat = "MMM dd, yyyy"
+        
+        return (date != nil) ?
+            dateFormatterPrint.string(from: date!) : string
     }
 }

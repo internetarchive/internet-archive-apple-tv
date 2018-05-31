@@ -17,6 +17,9 @@ class APIManager: NSObject {
     let API_LOGIN = "services/xauthn/?op=authenticate"
     let API_INFO = "services/xauthn/?op=info"
     let API_METADATA = "metadata/"
+    let API_WEB_LOGIN = "account/login.php"
+    let API_SAVE_FAVORITE = "bookmarks.php?add_bookmark=1"
+    let API_GET_FAVORITE = "metadata/fav-"
     
     let ACCESS = "trS8dVjP8dzaE296"
     let SECRET = "ICXDO78cnzUlPAt1"
@@ -41,6 +44,52 @@ class APIManager: NSObject {
             case .success:
                 if let json = response.result.value {
                     completion(json as? [String: Any])
+                }
+            case .failure:
+                completion(nil)
+                
+            }
+        }
+    }
+    
+    private func GetCookieData(email: String, password: String, completion: @escaping([String: Any]?) -> Void) {
+        var params = [String: Any]()
+        params["username"] = email
+        params["password"] = password
+        params["action"] = "login"
+        
+        let cookieProps: [HTTPCookiePropertyKey: Any] = [
+            HTTPCookiePropertyKey.version: 0,
+            HTTPCookiePropertyKey.name: "test-cookie",
+            HTTPCookiePropertyKey.path: "/",
+            HTTPCookiePropertyKey.value: "1",
+            HTTPCookiePropertyKey.domain: ".archive.org",
+            HTTPCookiePropertyKey.secure: false,
+            HTTPCookiePropertyKey.expires: NSDate(timeIntervalSinceNow: 86400 * 20)
+        ]
+        
+        if let cookie = HTTPCookie(properties: cookieProps) {
+            Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookie(cookie)
+        }
+        
+        Alamofire.request(BASE_URL + API_WEB_LOGIN, method: .post, parameters: params, encoding: URLEncoding.default, headers: ["Content-Type": "application/x-www-form-urlencoded"]).responseString{ (response) in
+            
+            switch response.result {
+            case .success:
+                if let cookies = HTTPCookieStorage.shared.cookies {
+                    var cookieData = [String: Any]()
+                    
+                    for cookie in cookies {
+                        if cookie.name == "logged-in-sig" {
+                            cookieData["logged-in-sig"] = cookie
+                        } else if cookie.name == "logged-in-user" {
+                            cookieData["logged-in-user"] = cookie
+                        }
+                    }
+                    
+                    completion(cookieData)
+                } else {
+                    completion(nil)
                 }
             case .failure:
                 completion(nil)
@@ -78,7 +127,7 @@ class APIManager: NSObject {
         let encodedURL = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
         
         Alamofire
-            .request(url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!, method: .get, encoding: URLEncoding.default, headers: HEADERS)
+            .request(encodedURL!, method: .get, encoding: URLEncoding.default, headers: HEADERS)
             .responseJSON{ (response) in
                 
             switch response.result {
@@ -95,7 +144,7 @@ class APIManager: NSObject {
     func getCollections(collection: String, result_type: String, limit: Int?, completion: @escaping (_ collection: String, _ data: [[String: Any]]?, _ err: Int?) -> Void) {
         var options = [
             "rows" : "1",
-            "fl[]" : "identifier,title,year,downloads,date"]
+            "fl[]" : "identifier,title,year,downloads,date,creator,description,mediatype"]
         
         if limit != nil {
             options["rows"] = "\(limit!)"
@@ -134,6 +183,58 @@ class APIManager: NSObject {
                 completion(nil, 0)
             }
         }
+    }
+    
+    func getFavoriteItems(username: String,
+                          completion: @escaping(_ success: Bool, _ err: Int?, _ items: [[String: Any]]?) -> Void) {
+        let url = "\(BASE_URL)\(API_GET_FAVORITE)\(username.lowercased())"
+        
+        Alamofire.request(url, method: .get, encoding: URLEncoding.default).responseJSON { (data) in
+            switch data.result {
+            case .success:
+                if let jsonData = data.result.value as? [String: Any],
+                    let items = jsonData["members"] as? [[String: Any]]{
+                    completion(true, nil, items)
+                } else {
+                    completion(true, nil, nil)
+                }
+            case .failure:
+                completion(false, data.response?.statusCode, nil)
+            }
+        }
+    }
+    
+    func saveFavoriteItem(email: String, password: String, identifier: String, mediatype: String, title: String, completion: @escaping(_ success: Bool, _ err: Int?) -> Void) {
+        
+        GetCookieData(email: email, password: password) { (data) in
+            if data != nil {
+                
+                let loggedInSig = data!["logged-in-sig"] as! HTTPCookie
+                let loggedInUser = data!["logged-in-user"] as! HTTPCookie
+                
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookie(loggedInSig)
+                Alamofire.SessionManager.default.session.configuration.httpCookieStorage?.setCookie(loggedInUser)
+                
+                let url = "\(self.BASE_URL)\(self.API_SAVE_FAVORITE)&mediatype=\(mediatype)&identifier=\(identifier)&title=\(title)"
+                let encodedURL = url.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)
+                
+                Alamofire.request(encodedURL!, method: .get, encoding: URLEncoding.default)
+                    .responseString {(response) in
+                    
+                        switch response.result {
+                        case .success:
+                            completion(true, nil)
+                        case .failure:
+                            completion(false, response.response?.statusCode)
+                    
+                    }
+                }
+                
+            } else {
+                completion(false, 301)
+            }
+        }
+        
     }
     
 }

@@ -13,6 +13,7 @@ import AlamofireImage
 class VideoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
     
     @IBOutlet weak var collectionView: UICollectionView!
+    
     var items = [[String: Any]]()
     var collection = "movies"
     
@@ -32,7 +33,7 @@ class VideoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 })
                 self.collectionView?.reloadData()
             } else {
-                Global.showAlert(title: "Error", message: "Error occurred while downloading videos", target: self)
+                Global.showAlert(title: "Error", message: "Error occurred while downloading data", target: self)
             }
         }
         
@@ -54,6 +55,7 @@ class VideoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         itemCell.itemTitle.text = "\(items[indexPath.row]["title"]!)"
         itemCell.itemDownloads.text = "(\(items[indexPath.row]["downloads"]!))"
         let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(items[indexPath.row]["identifier"]!)")
+        
         itemCell.itemImage.af_setImage(withURL: imageURL!)
         
         return itemCell
@@ -62,6 +64,7 @@ class VideoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         let nc = self.navigationController as! VideoNC
         nc.gotoYearsVC(collection: collection, title: (items[indexPath.row]["title"] as? String)!, identifier: (items[indexPath.row]["identifier"] as? String)!)
+//        nc.gotoItemVC()
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

@@ -33,13 +33,18 @@ class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
         self.pushViewController(yearsVC, animated: true)
     }
     
-    func gotoYearItemsVC(year: String, items: [[String: Any]], collection: String) -> Void {
-        let yearItemsVC = self.storyboard?.instantiateViewController(withIdentifier: "YearItemsVC") as! YearItemsVC
-        yearItemsVC.year = year
-        yearItemsVC.items = items
-        yearItemsVC.collection = collection
+    func gotoItemVC(identifier: String?, title: String?, archivedBy: String?, date: String?, description: String?, mediaType: String?, imageURL: URL?) {
+        let itemVC = self.storyboard?.instantiateViewController(withIdentifier: "ItemVC") as! ItemVC
         
-        self.pushViewController(yearItemsVC, animated: true)
+        itemVC.iIdentifier = identifier
+        itemVC.iTitle = (title != nil) ? title! : ""
+        itemVC.iArchivedBy = (archivedBy != nil) ? archivedBy! : ""
+        itemVC.iDate = (date != nil) ? date! : ""
+        itemVC.iDescription = (description != nil) ? description! : ""
+        itemVC.iMediaType = (mediaType != nil) ? mediaType! : ""
+        itemVC.iImageURL = imageURL
+        
+        self.pushViewController(itemVC, animated: true)
     }
     
     func openPlayer(identifier: String, title: String) -> Void {

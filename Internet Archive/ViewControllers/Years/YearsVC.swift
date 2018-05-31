@@ -26,27 +26,21 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     override func viewDidLoad() {
         super.viewDidLoad()
-    }
-    
-    override func viewWillAppear(_ animated: Bool) {
-        tableView.isHidden = true
-        collectionView.isHidden = true
-    }
-    
-    override func viewDidAppear(_ animated: Bool) {
+        
+        self.sortedData.removeAll()
+        self.view.isHidden = true
+        
         SVProgressHUD.show()
         
-        APIManager.sharedManager.getCollections(collection: identifier, result_type: collection, limit: nil) { (collection, data, err) in
+        APIManager.sharedManager.getCollections(collection: identifier, result_type: collection, limit: 5000) { (collection, data, err) in
             SVProgressHUD.dismiss()
             
             if let data = data {
-                self.collection = collection
-                
                 for item in data {
                     var year = "Undated"
                     
-                    if item["year"] != nil {
-                        year = (item["year"] as? String)!
+                    if let yearStr = item["year"] as? String {
+                        year = yearStr
                     }
                     
                     if self.sortedData[year] == nil {
@@ -61,8 +55,7 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 })
                 
                 self.tableView.reloadData()
-                self.tableView.isHidden = false
-                self.collectionView.isHidden = false
+                self.view.isHidden = false
             } else {
                 Global.showAlert(title: "Error", message: "Error occurred while downloading videos", target: self)
             }
@@ -104,6 +97,7 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         
         let data = sortedData[sortedKeys[selectedRow]]![indexPath.row]
         itemCell.itemTitle.text = data["title"] as? String
+        itemCell.itemDownloads.text = data["downloads"] as? String
         let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(data["identifier"] as! String)")
         itemCell.itemImage.af_setImage(withURL: imageURL!)
         
@@ -111,8 +105,18 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-//        let nc = self.navigationController as! BaseNC
-//        nc.gotoYearItemsVC(year: sortedKeys[indexPath.row], items: sortedData[sortedKeys[indexPath.row]]!, collection: collection)
+        let nc = self.navigationController as! BaseNC
+        
+        let data = sortedData[sortedKeys[selectedRow]]![indexPath.row]
+        let identifier = data["identifier"] as? String
+        let title = data["title"] as? String
+        let archivedBy = data["creator"] as? String
+        let date = Global.formatDate(string: data["date"] as? String)
+        let description = data["description"] as? String
+        let mediaType = data["mediatype"] as? String
+        let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(data["identifier"] as! String)")
+        
+        nc.gotoItemVC(identifier: identifier, title: title, archivedBy: archivedBy, date: date, description: description, mediaType: mediaType, imageURL: imageURL)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

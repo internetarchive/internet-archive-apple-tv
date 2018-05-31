@@ -7,3 +7,7 @@
 //
 
 import Foundation
+
+let Errors = [
+    301: "Login is required"
+]
