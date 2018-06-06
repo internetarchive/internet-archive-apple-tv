@@ -36,7 +36,6 @@ class VideoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 Global.showAlert(title: "Error", message: "Error occurred while downloading data", target: self)
             }
         }
-        
     }
 
     override func didReceiveMemoryWarning() {
@@ -55,7 +54,7 @@ class VideoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         itemCell.itemTitle.text = "\(items[indexPath.row]["title"]!)"
         itemCell.itemDownloads.text = "(\(items[indexPath.row]["downloads"]!))"
         let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(items[indexPath.row]["identifier"]!)")
-        
+
         itemCell.itemImage.af_setImage(withURL: imageURL!)
         
         return itemCell
@@ -65,6 +64,7 @@ class VideoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         let nc = self.navigationController as! VideoNC
         nc.gotoYearsVC(collection: collection, title: (items[indexPath.row]["title"] as? String)!, identifier: (items[indexPath.row]["identifier"] as? String)!)
 //        nc.gotoItemVC()
+//        nc.openPlayer(identifier: "", title: "")
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

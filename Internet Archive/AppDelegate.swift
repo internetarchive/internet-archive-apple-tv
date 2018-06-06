@@ -16,6 +16,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
 
     func application(_ application: UIApplication, didFinishLaunchingWithOptions launchOptions: [UIApplicationLaunchOptionsKey: Any]?) -> Bool {
         // Override point for customization after application launch.
+        
         if let tabController = window?.rootViewController as? UITabBarController {
             tabController.viewControllers?.insert(packagedSearchController(), at: 2)
         }
@@ -25,7 +26,7 @@ class AppDelegate: UIResponder, UIApplicationDelegate {
         return true
     }
     
-    // MARK: Convenience
+    // MARK: - Convenience
     
     /*
      A method demonstrating how to encapsulate a `UISearchController` for presentation in, for example, a `UITabBarController`

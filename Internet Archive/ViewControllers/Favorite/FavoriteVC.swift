@@ -50,7 +50,7 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                         
                         let query = identifiers.joined(separator: " OR ")
                         
-                        APIManager.sharedManager.search(query: "identifier:\(query)", options: options, completion: { (data, error) in
+                        APIManager.sharedManager.search(query: "identifier:(\(query))", options: options, completion: { (data, error) in
                             
                             self.movieItems.removeAll()
                             self.musicItems.removeAll()

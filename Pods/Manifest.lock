@@ -3,11 +3,15 @@ PODS:
   - AlamofireImage (3.3.1):
     - Alamofire (~> 4.5)
   - SVProgressHUD (2.2.5)
+  - TvOSMoreButton (1.1.1)
+  - TvOSTextViewer (1.1.1)
 
 DEPENDENCIES:
   - Alamofire
   - AlamofireImage (~> 3.3)
   - SVProgressHUD (from `https://github.com/SVProgressHUD/SVProgressHUD.git`)
+  - TvOSMoreButton (~> 1.1.1)
+  - TvOSTextViewer (~> 1.1.1)
 
 EXTERNAL SOURCES:
   SVProgressHUD:
@@ -22,7 +26,9 @@ SPEC CHECKSUMS:
   Alamofire: e4fa87002c137ba2d8d634d2c51fabcda0d5c223
   AlamofireImage: 3b35b586853abaf94ca1250f4e94cff3c21a4c0d
   SVProgressHUD: 1428aafac632c1f86f62aa4243ec12008d7a51d6
+  TvOSMoreButton: 57d29cc4734847893072c305b8758fb875d07b96
+  TvOSTextViewer: e369c08f6ba3c021aa6b25aa7a948a9561984006
 
-PODFILE CHECKSUM: 87d5e91b047fa95bc780779a9510ebb47f3d3a19
+PODFILE CHECKSUM: fb9ca7725fa4b2aab58b7d30f22358eb50d3471e
 
 COCOAPODS: 1.3.1

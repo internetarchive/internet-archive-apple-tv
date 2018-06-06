@@ -9,4 +9,6 @@ target 'Internet Archive' do
   pod 'Alamofire'
   pod 'AlamofireImage', '~> 3.3'
   pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
+  pod 'TvOSMoreButton', '~> 1.1.1'
+  pod 'TvOSTextViewer', '~> 1.1.1'
 end

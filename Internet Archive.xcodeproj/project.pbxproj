@@ -23,6 +23,7 @@
 		C39588C120BE0C4000BB23C5 /* YearsVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39588C020BE0C4000BB23C5 /* YearsVC.swift */; };
 		C39588C320BE116500BB23C5 /* YearCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39588C220BE116500BB23C5 /* YearCell.swift */; };
 		C39588C620BE35A200BB23C5 /* ItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39588C520BE35A200BB23C5 /* ItemVC.swift */; };
+		C3ADB04120C68C4F001B910B /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ADB04020C68C4F001B910B /* TabbarController.swift */; };
 		C3DD648220A22DFA0056DEC1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DD648120A22DFA0056DEC1 /* LoginVC.swift */; };
 		C3DD648420A22E1A0056DEC1 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DD648320A22E1A0056DEC1 /* RegisterVC.swift */; };
 		C3DD648720A233B20056DEC1 /* AccountNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DD648620A233B20056DEC1 /* AccountNC.swift */; };
@@ -53,6 +54,7 @@
 		C39588C020BE0C4000BB23C5 /* YearsVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearsVC.swift; sourceTree = "<group>"; };
 		C39588C220BE116500BB23C5 /* YearCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCell.swift; sourceTree = "<group>"; };
 		C39588C520BE35A200BB23C5 /* ItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVC.swift; sourceTree = "<group>"; };
+		C3ADB04020C68C4F001B910B /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
 		C3DD648120A22DFA0056DEC1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		C3DD648320A22E1A0056DEC1 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		C3DD648620A233B20056DEC1 /* AccountNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountNC.swift; sourceTree = "<group>"; };
@@ -144,6 +146,7 @@
 				C3DD648920A235E00056DEC1 /* Music */,
 				C3DD648820A235D40056DEC1 /* Videos */,
 				C3DD648520A233860056DEC1 /* Account */,
+				C3ADB04020C68C4F001B910B /* TabbarController.swift */,
 			);
 			path = ViewControllers;
 			sourceTree = "<group>";
@@ -306,12 +309,16 @@
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
+				"${BUILT_PRODUCTS_DIR}/TvOSMoreButton/TvOSMoreButton.framework",
+				"${BUILT_PRODUCTS_DIR}/TvOSTextViewer/TvOSTextViewer.framework",
 			);
 			name = "[CP] Embed Pods Frameworks";
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TvOSMoreButton.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TvOSTextViewer.framework",
 			);
 			runOnlyForDeploymentPostprocessing = 0;
 			shellPath = /bin/sh;
@@ -371,6 +378,7 @@
 				C3DD648720A233B20056DEC1 /* AccountNC.swift in Sources */,
 				C3260C6C20A2287F00C32ACA /* VideoVC.swift in Sources */,
 				C393F4CD20A2CDE900E58ED9 /* Global.swift in Sources */,
+				C3ADB04120C68C4F001B910B /* TabbarController.swift in Sources */,
 				C3827AEF20A4738A000D4780 /* MusicNC.swift in Sources */,
 				C3260C7C20A22CE300C32ACA /* MusicVC.swift in Sources */,
 				C3827AF120A47392000D4780 /* VideoNC.swift in Sources */,
@@ -526,6 +534,7 @@
 			buildSettings = {
 				ASSETCATALOG_COMPILER_APPICON_NAME = "App Icon & Top Shelf Image";
 				ASSETCATALOG_COMPILER_LAUNCHIMAGE_NAME = LaunchImage;
+				CODE_SIGN_IDENTITY = "iPhone Developer";
 				"CODE_SIGN_IDENTITY[sdk=appletvos*]" = "iPhone Distribution";
 				CODE_SIGN_STYLE = Manual;
 				DEVELOPMENT_TEAM = ZSFX78H3ZT;

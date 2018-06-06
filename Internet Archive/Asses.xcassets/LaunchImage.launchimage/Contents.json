@@ -3,7 +3,7 @@
     {
       "orientation" : "landscape",
       "idiom" : "tv",
-      "filename" : "TVUIExample_BG_LG.png",
+      "filename" : "launch.png",
       "extent" : "full-screen",
       "minimum-system-version" : "11.0",
       "scale" : "2x"

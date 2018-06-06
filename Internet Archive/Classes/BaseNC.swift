@@ -50,26 +50,41 @@ class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
     func openPlayer(identifier: String, title: String) -> Void {
         var filesToPlay = [[String: Any]]()
         
-        SVProgressHUD.show()
+//        let url = "https://raw.githubusercontent.com/Eagle19243/resource/master/music/001.mp3"
+//        let mediaURL = URL(string: url)!
+//        let asset = AVAsset(url: mediaURL)
+//        let playerItem = AVPlayerItem(asset: asset)
+//        let playerViewController = AVPlayerViewController()
+//        playerViewController.delegate = self
+//
+//        let player = AVPlayer(playerItem: playerItem)
+//        playerViewController.player = player
+//
+//        self.present(playerViewController, animated: true) {
+//            player.play()
+//            UIApplication.shared.isIdleTimerDisabled = true
+//        }
         
+        SVProgressHUD.show()
+
         APIManager.sharedManager.getMetaData(identifier: identifier) { (data, err) in
             SVProgressHUD.dismiss()
-            
+
             if let data = data {
                 for file in data["files"] as! [[String: Any]] {
                     let filename = file["name"] as! String
                     let ext = filename.suffix(4)
-                    
+
                     if ext == ".mp4" || ext == ".mp3" {
                         filesToPlay.append(file)
                     }
                 }
-                
+
                 if filesToPlay.count == 0 {
                     Global.showAlert(title: "Error", message: "There is no playable content", target: self)
                     return
                 }
-                
+
                 let filename = filesToPlay[0]["name"] as! String
                 let url = "https://archive.org/download/\(identifier)/\(filename.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
                 let mediaURL = URL(string: url)!
@@ -77,10 +92,10 @@ class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
                 let playerItem = AVPlayerItem(asset: asset)
                 let playerViewController = AVPlayerViewController()
                 playerViewController.delegate = self
-                
+
                 let player = AVPlayer(playerItem: playerItem)
                 playerViewController.player = player
-                
+
                 self.present(playerViewController, animated: true) {
                     player.play()
                 }
@@ -90,12 +105,9 @@ class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
         }
     }
     
-    func playerViewController(_ playerViewController: AVPlayerViewController, willPresent interstitial: AVInterstitialTimeRange) {
-        playerViewController.requiresLinearPlayback = true
-    }
-    
-    func playerViewController(_ playerViewController: AVPlayerViewController, didPresent interstitial: AVInterstitialTimeRange) {
-        playerViewController.requiresLinearPlayback = false
+    func playerViewControllerShouldDismiss(_ playerViewController: AVPlayerViewController) -> Bool {
+        UIApplication.shared.isIdleTimerDisabled = false
+        return true
     }
 
     /*

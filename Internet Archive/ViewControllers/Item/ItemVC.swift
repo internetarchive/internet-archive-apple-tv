@@ -7,6 +7,8 @@
 //
 
 import UIKit
+import TvOSMoreButton
+import TvOSTextViewer
 
 class ItemVC: UIViewController {
 
@@ -15,7 +17,7 @@ class ItemVC: UIViewController {
     @IBOutlet weak var txtTitle: UILabel!
     @IBOutlet weak var txtArchivedBy: UILabel!
     @IBOutlet weak var txtDate: UILabel!
-    @IBOutlet weak var txtDescription: UILabel!
+    @IBOutlet weak var txtDescription: TvOSMoreButton!
     @IBOutlet weak var itemImage: UIImageView!
     
     var iIdentifier: String?
@@ -38,6 +40,7 @@ class ItemVC: UIViewController {
         txtDate.text = "Date:  \(iDate ?? "")"
         txtDescription.text = iDescription
         itemImage.af_setImage(withURL: iImageURL!)
+        txtDescription.buttonWasPressed = onMoreButtonPressed
     }
 
     @IBAction func onPlay(_ sender: Any) {
@@ -62,6 +65,17 @@ class ItemVC: UIViewController {
         } else {
             Global.showAlert(title: "Error", message: "Login is required", target: self)
         }
+    }
+    
+    private func onMoreButtonPressed(text: String?) {
+        guard let text = text else {
+            return
+        }
+        
+        let textViewerController = TvOSTextViewerViewController()
+        textViewerController.text = text
+        textViewerController.textEdgeInsets = UIEdgeInsets(top: 100, left: 250, bottom: 100, right: 250)
+        present(textViewerController, animated: true, completion: nil)
     }
     
     override func didReceiveMemoryWarning() {
