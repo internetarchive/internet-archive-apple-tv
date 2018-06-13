@@ -7,12 +7,13 @@
 //
 
 import UIKit
-import SVProgressHUD
 
 class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDataSource, UICollectionViewDelegateFlowLayout {
 
     @IBOutlet weak var clsMovie: UICollectionView!
     @IBOutlet weak var clsMusic: UICollectionView!
+    @IBOutlet weak var lblMovies: UILabel!
+    @IBOutlet weak var lblMusic: UILabel!
     
     var movieItems = [[String: Any]]()
     var musicItems = [[String: Any]]()
@@ -22,10 +23,13 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     }
     
     override func viewWillAppear(_ animated: Bool) {
-        self.view.isHidden = true
+        self.clsMovie.isHidden = true
+        self.clsMusic.isHidden = true
+        self.lblMovies.isHidden = true
+        self.lblMusic.isHidden = true
         
         if Global.isLoggedIn() {
-            SVProgressHUD.show()
+            AppProgressHUD.sharedManager.show(view: self.view)
             
             APIManager.sharedManager.getFavoriteItems(username: Global.getUserData()!["username"] as! String)
             { (success, errCode, favorites) in
@@ -71,19 +75,20 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                             // Reload the collection view to reflect the changes.
                             self.clsMovie.reloadData()
                             self.clsMusic.reloadData()
-                            self.view.isHidden = false
+                            self.clsMovie.isHidden = false
+                            self.clsMusic.isHidden = false
+                            self.lblMovies.isHidden = false
+                            self.lblMusic.isHidden = false
                             
-                            SVProgressHUD.dismiss()
+                            AppProgressHUD.sharedManager.hide()
                         })
                     } else {
                         
                     }
                     
                 } else {
-                    
-                    SVProgressHUD.dismiss()
+                    AppProgressHUD.sharedManager.hide()
                     Global.showAlert(title: "", message: "Error occured while downloading favorites \n \(errCode!)", target: self)
-                    
                 }
             }
         } else {

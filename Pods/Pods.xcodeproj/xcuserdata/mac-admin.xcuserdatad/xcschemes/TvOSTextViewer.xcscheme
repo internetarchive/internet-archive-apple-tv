@@ -14,7 +14,7 @@
             buildForArchiving = "YES">
             <BuildableReference
                BuildableIdentifier = 'primary'
-               BlueprintIdentifier = '56BCC10497EF09914ADD1CA774913BF0'
+               BlueprintIdentifier = '007B3D2AED5D27DA557BBA04D1BC3940'
                BlueprintName = 'TvOSTextViewer'
                ReferencedContainer = 'container:Pods.xcodeproj'
                BuildableName = 'TvOSTextViewer.framework'>

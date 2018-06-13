@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
 import AlamofireImage
 
 class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UITableViewDelegate, UITableViewDataSource, UICollectionViewDelegateFlowLayout {
@@ -28,12 +27,13 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         super.viewDidLoad()
         
         self.sortedData.removeAll()
-        self.view.isHidden = true
+        self.tableView.isHidden = true
+        self.collectionView.isHidden = true
         
-        SVProgressHUD.show()
+        AppProgressHUD.sharedManager.show(view: self.view)
         
         APIManager.sharedManager.getCollections(collection: identifier, result_type: collection, limit: 5000) { (collection, data, err) in
-            SVProgressHUD.dismiss()
+            AppProgressHUD.sharedManager.hide()
             
             if let data = data {
                 for item in data {
@@ -45,9 +45,9 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                     
                     if self.sortedData[year] == nil {
                         self.sortedData[year] = [[String: Any]]()
-                    } else {
-                        self.sortedData[year]!.append(item)
                     }
+                    
+                    self.sortedData[year]!.append(item)
                 }
                 
                 self.sortedKeys = self.sortedData.keys.sorted(by: { (a, b) -> Bool in
@@ -55,7 +55,8 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 })
                 
                 self.tableView.reloadData()
-                self.view.isHidden = false
+                self.tableView.isHidden = false
+                self.collectionView.isHidden = false
             } else {
                 Global.showAlert(title: "Error", message: "Error occurred while downloading videos", target: self)
             }
@@ -97,7 +98,6 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         
         let data = sortedData[sortedKeys[selectedRow]]![indexPath.row]
         itemCell.itemTitle.text = data["title"] as? String
-        itemCell.itemDownloads.text = data["downloads"] as? String
         let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(data["identifier"] as! String)")
         itemCell.itemImage.af_setImage(withURL: imageURL!)
         
@@ -121,7 +121,7 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (screenSize.width / 4) - 100
-        let height = width + 145
+        let height = width + 115
         let cellSize = CGSize(width: width, height: height)
         return cellSize
     }

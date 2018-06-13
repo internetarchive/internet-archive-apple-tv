@@ -32,8 +32,6 @@ class ItemVC: UIViewController {
         super.viewDidLoad()
 
         btnPlay.setImage(UIImage(named: "play.png"), for: UIControlState.normal)
-        btnFavorite.setImage(UIImage(named: "favorite.png"), for: UIControlState.normal)
-        btnFavorite.tag = 0
         
         txtTitle.text = iTitle
         txtArchivedBy.text = "Archived By:  \(iArchivedBy ?? "")"
@@ -42,29 +40,46 @@ class ItemVC: UIViewController {
         itemImage.af_setImage(withURL: iImageURL!)
         txtDescription.buttonWasPressed = onMoreButtonPressed
     }
-
-    @IBAction func onPlay(_ sender: Any) {
-        let nc = self.navigationController as! BaseNC
-        nc.openPlayer(identifier: iIdentifier!, title: iTitle!)
-    }
     
-    @IBAction func onFavorite(_ sender: Any) {
-        if btnFavorite.tag == 0 {
+    override func viewWillAppear(_ animated: Bool) {
+        if let favorites = Global.getFavoriteData(), favorites.contains(iIdentifier!) {
             btnFavorite.setImage(UIImage(named: "favorited.png"), for: UIControlState.normal)
             btnFavorite.tag = 1
         } else {
             btnFavorite.setImage(UIImage(named: "favorite.png"), for: UIControlState.normal)
             btnFavorite.tag = 0
         }
+    }
+
+    @IBAction func onPlay(_ sender: Any) {
+        let nc = self.navigationController as! BaseNC
+        nc.openPlayer(identifier: iIdentifier!, title: iTitle!, mediaType: iMediaType!)
+    }
+    
+    @IBAction func onFavorite(_ sender: Any) {
         
         if let userData = Global.getUserData(),
             let email = userData["email"] as? String,
-            let password = userData["password"] as? String {
+            let password = userData["password"] as? String,
+            !email.isEmpty,
+            !password.isEmpty {
+            
+            if btnFavorite.tag == 0 {
+                btnFavorite.setImage(UIImage(named: "favorited.png"), for: UIControlState.normal)
+                btnFavorite.tag = 1
+                Global.saveFavoriteData(identifier: iIdentifier!)
+            } else {
+                btnFavorite.setImage(UIImage(named: "favorite.png"), for: UIControlState.normal)
+                btnFavorite.tag = 0
+                Global.removeFavoriteData(identifier: iIdentifier!)
+            }
             
             APIManager.sharedManager.saveFavoriteItem(email: email, password: password, identifier: iIdentifier!, mediatype: iMediaType!, title: iTitle!) { (_, _) in }
+            
         } else {
             Global.showAlert(title: "Error", message: "Login is required", target: self)
         }
+        
     }
     
     private func onMoreButtonPressed(text: String?) {

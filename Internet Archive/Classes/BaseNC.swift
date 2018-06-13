@@ -9,7 +9,6 @@
 import UIKit
 import AVKit
 import AVFoundation
-import SVProgressHUD
 
 class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
     
@@ -47,7 +46,7 @@ class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
         self.pushViewController(itemVC, animated: true)
     }
     
-    func openPlayer(identifier: String, title: String) -> Void {
+    func openPlayer(identifier: String, title: String, mediaType: String) -> Void {
         var filesToPlay = [[String: Any]]()
         
 //        let url = "https://raw.githubusercontent.com/Eagle19243/resource/master/music/001.mp3"
@@ -65,17 +64,19 @@ class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
 //            UIApplication.shared.isIdleTimerDisabled = true
 //        }
         
-        SVProgressHUD.show()
+        AppProgressHUD.sharedManager.show(view: self.view)
 
         APIManager.sharedManager.getMetaData(identifier: identifier) { (data, err) in
-            SVProgressHUD.dismiss()
+            AppProgressHUD.sharedManager.hide()
 
             if let data = data {
                 for file in data["files"] as! [[String: Any]] {
                     let filename = file["name"] as! String
                     let ext = filename.suffix(4)
 
-                    if ext == ".mp4" || ext == ".mp3" {
+                    if ext == ".mp4", mediaType == "movies" {
+                        filesToPlay.append(file)
+                    } else if ext == ".mp3", mediaType == "etree" {
                         filesToPlay.append(file)
                     }
                 }

@@ -11,4 +11,5 @@ target 'Internet Archive' do
   pod 'SVProgressHUD', :git => 'https://github.com/SVProgressHUD/SVProgressHUD.git'
   pod 'TvOSMoreButton', '~> 1.1.1'
   pod 'TvOSTextViewer', '~> 1.1.1'
+  pod 'MBProgressHUD', '~> 1.1.0'
 end

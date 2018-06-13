@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
 
 class TabbarController: UITabBarController {
 
@@ -16,10 +15,40 @@ class TabbarController: UITabBarController {
 
         // Do any additional setup after loading the view.
         
-        
+        loginCheck()
+        syncFavorites()
     }
     
-    private func getFavorites() {
+    private func syncFavorites() {
+        if !Global.isLoggedIn() {
+            return
+        }
+        
+        
+        if let userData = Global.getUserData(),
+            let username = userData["username"] as? String {
+            
+            APIManager.sharedManager.getFavoriteItems(username: username) { (success, errCode, items) in
+                
+                if success, let items = items {
+                    guard let favorites = Global.getFavoriteData() else {
+                        Global.resetFavoriteData()
+                        return
+                    }
+                    
+                    for item in items {
+                        let identifier = item["identifier"] as! String
+                        guard favorites.contains(identifier) else {
+                            Global.saveFavoriteData(identifier: identifier)
+                            return
+                        }
+                    }
+                } else {
+                    Global.showAlert(title: "Error", message: Errors[302]!, target: self)
+                    return
+                }
+            }
+        }
         
     }
     
@@ -32,11 +61,7 @@ class TabbarController: UITabBarController {
             let email = userData["email"] as? String,
             let password = userData["password"] as? String {
             
-            SVProgressHUD.show()
-            
             APIManager.sharedManager.login(email: email, password: password) { (data) in
-                
-                SVProgressHUD.dismiss()
                 
                 if data == nil {
                     Global.showAlert(title: "Error", message: Errors[400]!, target: self)

@@ -24,6 +24,7 @@
 		C39588C320BE116500BB23C5 /* YearCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39588C220BE116500BB23C5 /* YearCell.swift */; };
 		C39588C620BE35A200BB23C5 /* ItemVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C39588C520BE35A200BB23C5 /* ItemVC.swift */; };
 		C3ADB04120C68C4F001B910B /* TabbarController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3ADB04020C68C4F001B910B /* TabbarController.swift */; };
+		C3D372E920D1B7C100DEDF08 /* AppProgressHUD.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3D372E820D1B7C100DEDF08 /* AppProgressHUD.swift */; };
 		C3DD648220A22DFA0056DEC1 /* LoginVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DD648120A22DFA0056DEC1 /* LoginVC.swift */; };
 		C3DD648420A22E1A0056DEC1 /* RegisterVC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DD648320A22E1A0056DEC1 /* RegisterVC.swift */; };
 		C3DD648720A233B20056DEC1 /* AccountNC.swift in Sources */ = {isa = PBXBuildFile; fileRef = C3DD648620A233B20056DEC1 /* AccountNC.swift */; };
@@ -55,6 +56,7 @@
 		C39588C220BE116500BB23C5 /* YearCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = YearCell.swift; sourceTree = "<group>"; };
 		C39588C520BE35A200BB23C5 /* ItemVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ItemVC.swift; sourceTree = "<group>"; };
 		C3ADB04020C68C4F001B910B /* TabbarController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TabbarController.swift; sourceTree = "<group>"; };
+		C3D372E820D1B7C100DEDF08 /* AppProgressHUD.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppProgressHUD.swift; sourceTree = "<group>"; };
 		C3DD648120A22DFA0056DEC1 /* LoginVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = LoginVC.swift; sourceTree = "<group>"; };
 		C3DD648320A22E1A0056DEC1 /* RegisterVC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RegisterVC.swift; sourceTree = "<group>"; };
 		C3DD648620A233B20056DEC1 /* AccountNC.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AccountNC.swift; sourceTree = "<group>"; };
@@ -211,6 +213,7 @@
 				C3DD648C20A238160056DEC1 /* APIManager.swift */,
 				C3DD648E20A2382B0056DEC1 /* AppConstants.swift */,
 				C393F4CC20A2CDE900E58ED9 /* Global.swift */,
+				C3D372E820D1B7C100DEDF08 /* AppProgressHUD.swift */,
 			);
 			path = Utilities;
 			sourceTree = "<group>";
@@ -308,6 +311,7 @@
 				"${SRCROOT}/Pods/Target Support Files/Pods-Internet Archive/Pods-Internet Archive-frameworks.sh",
 				"${BUILT_PRODUCTS_DIR}/Alamofire/Alamofire.framework",
 				"${BUILT_PRODUCTS_DIR}/AlamofireImage/AlamofireImage.framework",
+				"${BUILT_PRODUCTS_DIR}/MBProgressHUD/MBProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/SVProgressHUD/SVProgressHUD.framework",
 				"${BUILT_PRODUCTS_DIR}/TvOSMoreButton/TvOSMoreButton.framework",
 				"${BUILT_PRODUCTS_DIR}/TvOSTextViewer/TvOSTextViewer.framework",
@@ -316,6 +320,7 @@
 			outputPaths = (
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/Alamofire.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/AlamofireImage.framework",
+				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/MBProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/SVProgressHUD.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TvOSMoreButton.framework",
 				"${TARGET_BUILD_DIR}/${FRAMEWORKS_FOLDER_PATH}/TvOSTextViewer.framework",
@@ -369,6 +374,7 @@
 				C3186B9B20BF07E700698EC3 /* FavoriteNC.swift in Sources */,
 				C3827AF920A4ADE4000D4780 /* BaseNC.swift in Sources */,
 				C39588C320BE116500BB23C5 /* YearCell.swift in Sources */,
+				C3D372E920D1B7C100DEDF08 /* AppProgressHUD.swift in Sources */,
 				C39588C120BE0C4000BB23C5 /* YearsVC.swift in Sources */,
 				C3DD648420A22E1A0056DEC1 /* RegisterVC.swift in Sources */,
 				C3260C7D20A22CE300C32ACA /* AccountVC.swift in Sources */,

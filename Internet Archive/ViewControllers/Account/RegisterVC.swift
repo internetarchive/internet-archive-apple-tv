@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
 
 class RegisterVC: UIViewController {
 
@@ -27,7 +26,7 @@ class RegisterVC: UIViewController {
             return
         }
         
-        SVProgressHUD.show()
+        AppProgressHUD.sharedManager.show(view: self.view)
         
         let email = txtEmail.text!
         let password = txtPassword.text!
@@ -39,7 +38,7 @@ class RegisterVC: UIViewController {
             "screenname" : username,
             "verified" : false
         ]) { (data) in
-            SVProgressHUD.dismiss()
+            AppProgressHUD.sharedManager.hide()
             
             if data == nil {
                 Global.showAlert(title: "Error", message: "Server error", target: self)

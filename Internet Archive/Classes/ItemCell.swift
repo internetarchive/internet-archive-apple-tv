@@ -11,7 +11,6 @@ import UIKit
 class ItemCell: UICollectionViewCell {
     @IBOutlet weak var itemImage: UIImageView!
     @IBOutlet weak var itemTitle: UILabel!
-    @IBOutlet weak var itemDownloads: UILabel!
     
     override init(frame: CGRect) {
         super.init(frame: frame)

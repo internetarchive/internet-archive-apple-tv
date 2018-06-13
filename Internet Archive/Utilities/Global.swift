@@ -8,8 +8,12 @@
 
 import Foundation
 import UIKit
+//import AlamofireImage
 
 class Global: NSObject {
+    
+//    static let downloaderNotCached = ImageDownloader(configuration: URLSessionConfiguration.default, downloadPrioritization: .fifo, maximumActiveDownloads: 10, imageCache: nil)
+    
     // Save UserData
     static func saveUserData(userData: [String: Any?]) {
         UserDefaults.standard.set(userData, forKey: "UserData")
@@ -20,14 +24,14 @@ class Global: NSObject {
         return UserDefaults.standard.value(forKey: "UserData") as? [String : Any?]
     }
     
-    static func saveFavoriteData(identifer: String) {
+    static func saveFavoriteData(identifier: String) {
         var favorites = getFavoriteData()
         
         if  favorites == nil {
-            UserDefaults.standard.set([identifer], forKey: "FavoriteData")
+            UserDefaults.standard.set([identifier], forKey: "FavoriteData")
         } else {
-            if !(favorites?.contains(identifer))! {
-                favorites?.append(identifer)
+            if !(favorites?.contains(identifier))! {
+                favorites?.append(identifier)
                 UserDefaults.standard.set(favorites, forKey: "FavoriteData")
             }
         }
@@ -36,6 +40,17 @@ class Global: NSObject {
     static func getFavoriteData() -> [String]? {
         let ret = UserDefaults.standard.stringArray(forKey: "FavoriteData")
         return ret
+    }
+    
+    static func removeFavoriteData(identifier: String) -> Void {
+        if let favorites = getFavoriteData(), favorites.contains(identifier) {
+            let farray = favorites.filter { $0 != identifier }
+            UserDefaults.standard.set(farray, forKey: "FavoriteData")
+        }
+    }
+    
+    static func resetFavoriteData() -> Void {
+        UserDefaults.standard.set([String](), forKey: "FavoriteData")
     }
     
     static func isLoggedIn() -> Bool {
@@ -72,4 +87,11 @@ class Global: NSObject {
         return (date != nil) ?
             dateFormatterPrint.string(from: date!) : string
     }
+    
+//    static func downloadImage(url: URL, completion: @escaping (UIImage?) -> ()) {
+//        let urlRequest = URLRequest(url: url)
+//        downloaderNotCached.download(urlRequest) { (response) in
+//            completion(response.result.value)
+//        }
+//    }
 }

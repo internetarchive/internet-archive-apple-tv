@@ -7,7 +7,6 @@
 //
 
 import UIKit
-import SVProgressHUD
 import AlamofireImage
 
 class MusicVC: UIViewController, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
@@ -22,9 +21,10 @@ class MusicVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     override func viewDidLoad() {
         super.viewDidLoad()
         
-        SVProgressHUD.show()
+        AppProgressHUD.sharedManager.show(view: self.view)
+        
         APIManager.sharedManager.getCollections(collection: collection, result_type: "collection", limit: nil) { (collection, data, err) in
-            SVProgressHUD.dismiss()
+            AppProgressHUD.sharedManager.hide()
             
             if let data = data {
                 self.collection = collection
@@ -52,7 +52,6 @@ class MusicVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         let itemCell = collectionView.dequeueReusableCell(withReuseIdentifier: "ItemCell", for: indexPath as IndexPath) as! ItemCell
         
         itemCell.itemTitle.text = "\(items[indexPath.row]["title"]!)"
-        itemCell.itemDownloads.text = "(\(items[indexPath.row]["downloads"]!))"
         let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(items[indexPath.row]["identifier"] as! String)")
         
         itemCell.itemImage.af_setImage(withURL: imageURL!)
@@ -67,7 +66,7 @@ class MusicVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {
         let width = (screenSize.width / 5) - 100
-        let height = width + 145
+        let height = width + 115
         let cellSize = CGSize(width: width, height: height)
         return cellSize
     }
