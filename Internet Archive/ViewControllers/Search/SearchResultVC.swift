@@ -13,15 +13,14 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
     
     @IBOutlet weak var clsVideo: UICollectionView!
     @IBOutlet weak var clsMusic: UICollectionView!
+    @IBOutlet weak var lblMovies: UILabel!
+    @IBOutlet weak var lblMusic: UILabel!
     
     var videoItems = [[String: Any]]()
     var musicItems = [[String: Any]]()
     
     var query = "" {
         didSet {
-            videoItems.removeAll()
-            musicItems.removeAll()
-            
             // Return if the filter string hasn't changed.
             let trimedQuery = query.trimmingCharacters(in: .whitespaces)
             guard trimedQuery != oldValue else { return }
@@ -29,6 +28,13 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
             // Apply the filter or show all items if the filter string is empty.
             
             AppProgressHUD.sharedManager.show(view: self.view)
+            videoItems.removeAll()
+            musicItems.removeAll()
+            
+            clsVideo.isHidden = true
+            clsMusic.isHidden = true
+            lblMovies.isHidden = true
+            lblMusic.isHidden = true
             
             let options = [
                 "rows": "50",
@@ -37,9 +43,11 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
             ]
             
             APIManager.sharedManager.search(query: "\(trimedQuery)AND mediatype:(etree OR movies)", options: options, completion: { (data, error) in
-
-                self.videoItems.removeAll()
-                self.musicItems.removeAll()
+                
+                self.clsVideo.isHidden = false
+                self.clsMusic.isHidden = false
+                self.lblMovies.isHidden = false
+                self.lblMusic.isHidden = false
 
                 if let data = data {
                     let items = data["docs"] as! [[String : Any]]
@@ -65,7 +73,13 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
     
     override func viewDidLoad() {
         super.viewDidLoad()
-        
+    }
+    
+    override func viewWillAppear(_ animated: Bool) {
+        clsVideo.isHidden = true
+        clsMusic.isHidden = true
+        lblMovies.isHidden = true
+        lblMusic.isHidden = true
     }
 
     func updateSearchResults(for searchController: UISearchController) {

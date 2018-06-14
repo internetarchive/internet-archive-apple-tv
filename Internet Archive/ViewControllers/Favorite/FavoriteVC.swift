@@ -12,11 +12,14 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
 
     @IBOutlet weak var clsMovie: UICollectionView!
     @IBOutlet weak var clsMusic: UICollectionView!
+    @IBOutlet weak var clsPeople: UICollectionView!
     @IBOutlet weak var lblMovies: UILabel!
     @IBOutlet weak var lblMusic: UILabel!
+    @IBOutlet weak var lblPeople: UILabel!
     
     var movieItems = [[String: Any]]()
     var musicItems = [[String: Any]]()
+    var peoples = [[String: Any]]()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -25,8 +28,10 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     override func viewWillAppear(_ animated: Bool) {
         self.clsMovie.isHidden = true
         self.clsMusic.isHidden = true
+        self.clsPeople.isHidden = true
         self.lblMovies.isHidden = true
         self.lblMusic.isHidden = true
+        self.lblPeople.isHidden = true
         
         if Global.isLoggedIn() {
             AppProgressHUD.sharedManager.show(view: self.view)
@@ -41,7 +46,7 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                         
                         for item in favorites {
                             if let mediaType = item["mediatype"] as? String {
-                                if mediaType == "movies" || mediaType == "audio" {
+                                if mediaType == "movies" || mediaType == "audio" || mediaType == "account" {
                                     identifiers.append(item["identifier"] as! String)
                                 }
                             }
@@ -58,6 +63,7 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                             
                             self.movieItems.removeAll()
                             self.musicItems.removeAll()
+                            self.peoples.removeAll()
                             
                             if let data = data {
                                 let items = data["docs"] as! [[String : Any]]
@@ -68,6 +74,8 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                                         self.movieItems.append(item)
                                     } else if (mediaType == "audio") {
                                         self.musicItems.append(item)
+                                    } else if (mediaType == "account") {
+                                        self.peoples.append(item)
                                     }
                                 }
                             }
@@ -75,10 +83,13 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
                             // Reload the collection view to reflect the changes.
                             self.clsMovie.reloadData()
                             self.clsMusic.reloadData()
+                            self.clsPeople.reloadData()
                             self.clsMovie.isHidden = false
                             self.clsMusic.isHidden = false
+                            self.clsPeople.isHidden = false
                             self.lblMovies.isHidden = false
                             self.lblMusic.isHidden = false
+                            self.lblPeople.isHidden = false
                             
                             AppProgressHUD.sharedManager.hide()
                         })
@@ -99,8 +110,12 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     func collectionView(_ collectionView: UICollectionView, numberOfItemsInSection section: Int) -> Int {
         if collectionView == clsMovie {
             return movieItems.count
-        } else {
+        } else if collectionView == clsMusic {
             return musicItems.count
+        } else if collectionView == clsPeople {
+            return peoples.count
+        } else {
+            return 0
         }
     }
     
@@ -111,8 +126,10 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
         
         if collectionView == clsMovie {
             items = movieItems
-        } else {
+        } else if collectionView == clsMusic {
             items = musicItems
+        } else if collectionView == clsPeople {
+            items = peoples
         }
         
         let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(items[indexPath.row]["identifier"]!)")
