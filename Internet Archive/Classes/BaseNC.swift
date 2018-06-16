@@ -46,6 +46,14 @@ class BaseNC: UINavigationController, AVPlayerViewControllerDelegate {
         self.pushViewController(itemVC, animated: true)
     }
     
+    func gotoPeopleVC(identifier: String?, title: String?) {
+        let peopleVC = self.storyboard?.instantiateViewController(withIdentifier: "PeopleVC") as! PeopleVC
+        peopleVC.identifier = identifier
+        peopleVC.name = title
+        
+        self.pushViewController(peopleVC, animated: true)
+    }
+    
     func openPlayer(identifier: String, title: String, mediaType: String) -> Void {
         var filesToPlay = [[String: Any]]()
         

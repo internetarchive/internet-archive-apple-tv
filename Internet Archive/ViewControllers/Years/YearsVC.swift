@@ -13,6 +13,7 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     
     @IBOutlet weak var tableView: UITableView!
     @IBOutlet weak var collectionView: UICollectionView!
+    @IBOutlet weak var lblTitle: UILabel!
     
     var name = ""
     var identifier = ""
@@ -29,6 +30,8 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         self.sortedData.removeAll()
         self.tableView.isHidden = true
         self.collectionView.isHidden = true
+        self.lblTitle.isHidden = true
+        self.lblTitle.text = name
         
         AppProgressHUD.sharedManager.show(view: self.view)
         
@@ -57,6 +60,7 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 self.tableView.reloadData()
                 self.tableView.isHidden = false
                 self.collectionView.isHidden = false
+                self.lblTitle.isHidden = false
             } else {
                 Global.showAlert(title: "Error", message: "Error occurred while downloading videos", target: self)
             }

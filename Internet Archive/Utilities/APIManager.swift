@@ -116,6 +116,13 @@ class APIManager: NSObject {
         SendDataToService(params: ["email": email], operation: API_INFO, completion: completion)
     }
     
+//    // Get Username
+//    func getUsername(itemname: String, completion: @escaping (String?) -> Void) {
+//        SendDataToService(params: ["itemname": itemname], operation: API_INFO, completion: { (data) in
+//            print(data)
+//        })
+//    }
+    
     func search(query: String, options: [String: String], completion: @escaping (_ data: [String: Any]?, _ err: Int?) -> Void) {
         var str_option = "&output=json"
         

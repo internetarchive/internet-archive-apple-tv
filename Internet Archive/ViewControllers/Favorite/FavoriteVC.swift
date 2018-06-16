@@ -141,24 +141,33 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var items = [[String: Any]]()
-        
-        if collectionView == clsMovie {
-            items = movieItems
-        } else {
-            items = musicItems
-        }
-        
-        let data = items[indexPath.row]
-        let identifier = data["identifier"] as? String
-        let title = data["title"] as? String
-        let archivedBy = data["creator"] as? String
-        let date = data["date"] as? String
-        let description = data["description"] as? String
-        let mediaType = data["mediatype"] as? String
-        let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(data["identifier"] as! String)")
-        
         let nc = self.navigationController as? BaseNC
-        nc?.gotoItemVC(identifier: identifier, title: title, archivedBy: archivedBy, date: date, description: description, mediaType: mediaType, imageURL: imageURL)
+        
+        if collectionView == clsPeople {
+            items = peoples
+            
+            let data = items[indexPath.row]
+            let identifier = data["identifier"] as? String
+            let title = data["title"] as? String
+            nc?.gotoPeopleVC(identifier: identifier, title: title)
+        } else {
+            if collectionView == clsMovie {
+                items = movieItems
+            } else if collectionView == clsMusic {
+                items = musicItems
+            }
+            
+            let data = items[indexPath.row]
+            let identifier = data["identifier"] as? String
+            let title = data["title"] as? String
+            let archivedBy = data["creator"] as? String
+            let date = data["date"] as? String
+            let description = data["description"] as? String
+            let mediaType = data["mediatype"] as? String
+            let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(data["identifier"] as! String)")
+            
+            nc?.gotoItemVC(identifier: identifier, title: title, archivedBy: archivedBy, date: date, description: description, mediaType: mediaType, imageURL: imageURL)
+        }
     }
     
 }
