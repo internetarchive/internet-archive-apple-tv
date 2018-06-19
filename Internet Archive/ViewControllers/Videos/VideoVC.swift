@@ -22,10 +22,10 @@ class VideoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         super.viewDidLoad()
         
         AppProgressHUD.sharedManager.show(view: self.view)
-        
+
         APIManager.sharedManager.getCollections(collection: collection, result_type: "collection", limit: nil) { (collection, data, err) in
             AppProgressHUD.sharedManager.hide()
-            
+
             if let data = data {
                 self.collection = collection
                 self.items = data.sorted(by: { (a, b) -> Bool in

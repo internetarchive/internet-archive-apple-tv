@@ -38,11 +38,10 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
             
             let options = [
                 "rows": "50",
-                "fl[]" : "identifier,title,downloads,mediatype",
-                "sort[]" : "downloads+desc"
+                "fl[]" : "identifier,title,downloads,mediatype"
             ]
             
-            APIManager.sharedManager.search(query: "\(trimedQuery)AND mediatype:(etree OR movies)", options: options, completion: { (data, error) in
+            APIManager.sharedManager.search(query: "\(trimedQuery) AND mediatype:(etree OR movies)", options: options, completion: { (data, error) in
                 
                 self.clsVideo.isHidden = false
                 self.clsMusic.isHidden = false

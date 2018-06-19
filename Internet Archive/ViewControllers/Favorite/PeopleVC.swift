@@ -93,7 +93,7 @@ class PeopleVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
                         AppProgressHUD.sharedManager.hide()
                     })
                 } else {
-                    
+                    AppProgressHUD.sharedManager.hide()
                 }
                 
             } else {

@@ -342,9 +342,9 @@
                                 <rect key="frame" x="0.0" y="0.0" width="1920" height="140"/>
                                 <subviews>
                                     <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="oVe-Mp-lrh">
-                                        <rect key="frame" x="889" y="35" width="143" height="95"/>
+                                        <rect key="frame" x="913" y="35" width="95" height="95"/>
                                         <constraints>
-                                            <constraint firstAttribute="width" secondItem="oVe-Mp-lrh" secondAttribute="height" multiplier="1.5:1" id="rM0-eo-PaX"/>
+                                            <constraint firstAttribute="width" secondItem="oVe-Mp-lrh" secondAttribute="height" multiplier="1:1" id="rM0-eo-PaX"/>
                                         </constraints>
                                     </imageView>
                                 </subviews>
@@ -601,7 +601,7 @@
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
-                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" image="logo" translatesAutoresizingMaskIntoConstraints="NO" id="n45-cf-aUC">
+                            <imageView userInteractionEnabled="NO" contentMode="scaleAspectFit" horizontalHuggingPriority="251" verticalHuggingPriority="251" translatesAutoresizingMaskIntoConstraints="NO" id="n45-cf-aUC">
                                 <rect key="frame" x="1340" y="150" width="500" height="500"/>
                                 <constraints>
                                     <constraint firstAttribute="width" secondItem="n45-cf-aUC" secondAttribute="height" multiplier="1:1" id="XQ6-oQ-tPQ"/>
@@ -1639,6 +1639,6 @@
         </scene>
     </scenes>
     <resources>
-        <image name="logo" width="512" height="512"/>
+        <image name="logo" width="100" height="100"/>
     </resources>
 </document>

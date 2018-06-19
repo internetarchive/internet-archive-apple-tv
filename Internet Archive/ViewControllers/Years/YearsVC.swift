@@ -36,6 +36,7 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         AppProgressHUD.sharedManager.show(view: self.view)
         
         APIManager.sharedManager.getCollections(collection: identifier, result_type: collection, limit: 5000) { (collection, data, err) in
+            
             AppProgressHUD.sharedManager.hide()
             
             if let data = data {
