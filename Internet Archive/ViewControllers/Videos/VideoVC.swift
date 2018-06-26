@@ -60,10 +60,12 @@ class VideoVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let nc = self.navigationController as! VideoNC
-        nc.gotoYearsVC(collection: collection, title: (items[indexPath.row]["title"] as? String)!, identifier: (items[indexPath.row]["identifier"] as? String)!)
-//        nc.gotoItemVC()
-//        nc.openPlayer(identifier: "", title: "")
+        let yearsVC = self.storyboard?.instantiateViewController(withIdentifier: "YearsVC") as! YearsVC
+        yearsVC.collection = collection
+        yearsVC.name = (items[indexPath.row]["title"] as? String)!
+        yearsVC.identifier = (items[indexPath.row]["identifier"] as? String)!
+        
+        self.present(yearsVC, animated: true, completion: nil)
     }
 
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

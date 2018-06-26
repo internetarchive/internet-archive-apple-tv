@@ -9,7 +9,7 @@
 import UIKit
 import AVKit
 
-class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout {
+class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionViewDataSource, UICollectionViewDelegate, UICollectionViewDelegateFlowLayout, AVPlayerViewControllerDelegate {
     
     @IBOutlet weak var clsVideo: UICollectionView!
     @IBOutlet weak var clsMusic: UICollectionView!
@@ -24,7 +24,14 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
             // Return if the filter string hasn't changed.
             let trimedQuery = query.trimmingCharacters(in: .whitespaces)
             guard trimedQuery != oldValue else { return }
-            if trimedQuery.isEmpty { return }
+            if trimedQuery.isEmpty {
+                videoItems.removeAll()
+                musicItems.removeAll()
+                self.clsVideo.reloadData()
+                self.clsMusic.reloadData()
+                
+                return
+            }
             // Apply the filter or show all items if the filter string is empty.
             
             AppProgressHUD.sharedManager.show(view: self.view)
@@ -122,7 +129,6 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
         }
         
         let identifier = items[indexPath.row]["identifier"] as! String
-        let title = items[indexPath.row]["title"] as! String
         var filesToPlay = [[String: Any]]()
         
         AppProgressHUD.sharedManager.show(view: self.view)
@@ -151,6 +157,7 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
                 let asset = AVAsset(url: mediaURL)
                 let playerItem = AVPlayerItem(asset: asset)
                 let playerViewController = AVPlayerViewController()
+                playerViewController.delegate = self
                 
                 let player = AVPlayer(playerItem: playerItem)
                 playerViewController.player = player
@@ -162,6 +169,11 @@ class SearchResultVC: UIViewController, UISearchResultsUpdating, UICollectionVie
                 Global.showAlert(title: "Error", message: "Error ocurred while downloading content", target: self)
             }
         }
+    }
+    
+    func playerViewControllerShouldDismiss(_ playerViewController: AVPlayerViewController) -> Bool {
+        UIApplication.shared.isIdleTimerDisabled = false
+        return true
     }
 }
 

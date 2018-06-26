@@ -597,7 +597,7 @@
                         <viewControllerLayoutGuide type="top" id="IhD-YN-uBa"/>
                         <viewControllerLayoutGuide type="bottom" id="Qpi-cn-5hZ"/>
                     </layoutGuides>
-                    <view key="view" contentMode="scaleToFill" id="swD-4Z-bcL">
+                    <view key="view" alpha="0.59999999999999998" contentMode="scaleToFill" id="swD-4Z-bcL">
                         <rect key="frame" x="0.0" y="0.0" width="1920" height="1080"/>
                         <autoresizingMask key="autoresizingMask" widthSizable="YES" heightSizable="YES"/>
                         <subviews>
@@ -656,7 +656,7 @@
                                 </connections>
                             </button>
                         </subviews>
-                        <color key="backgroundColor" red="0.32630240137458016" green="0.42587852196442727" blue="0.67011024746192893" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
+                        <color key="backgroundColor" red="0.3263024014" green="0.42587852199999998" blue="0.67011024750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="aup-oI-vyT" firstAttribute="leading" secondItem="swD-4Z-bcL" secondAttribute="leading" constant="100" id="17e-f0-eBs"/>
                             <constraint firstItem="UXv-NV-8pA" firstAttribute="top" secondItem="swD-4Z-bcL" secondAttribute="top" constant="100" id="GOJ-Px-crc"/>

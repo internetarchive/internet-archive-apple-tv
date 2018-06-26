@@ -141,7 +141,6 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
         var items = [[String: Any]]()
-        let nc = self.navigationController as? BaseNC
         
         if collectionView == clsPeople {
             items = peoples
@@ -149,7 +148,12 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             let data = items[indexPath.row]
             let identifier = data["identifier"] as? String
             let title = data["title"] as? String
-            nc?.gotoPeopleVC(identifier: identifier, title: title)
+            
+            let peopleVC = self.storyboard?.instantiateViewController(withIdentifier: "PeopleVC") as! PeopleVC
+            peopleVC.identifier = identifier
+            peopleVC.name = title
+            
+            self.present(peopleVC, animated: true, completion: nil)
         } else {
             if collectionView == clsMovie {
                 items = movieItems
@@ -166,7 +170,17 @@ class FavoriteVC: UIViewController, UICollectionViewDelegate, UICollectionViewDa
             let mediaType = data["mediatype"] as? String
             let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(data["identifier"] as! String)")
             
-            nc?.gotoItemVC(identifier: identifier, title: title, archivedBy: archivedBy, date: date, description: description, mediaType: mediaType, imageURL: imageURL)
+            let itemVC = self.storyboard?.instantiateViewController(withIdentifier: "ItemVC") as! ItemVC
+            
+            itemVC.iIdentifier = identifier
+            itemVC.iTitle = (title != nil) ? title! : ""
+            itemVC.iArchivedBy = (archivedBy != nil) ? archivedBy! : ""
+            itemVC.iDate = (date != nil) ? date! : ""
+            itemVC.iDescription = (description != nil) ? description! : ""
+            itemVC.iMediaType = (mediaType != nil) ? mediaType! : ""
+            itemVC.iImageURL = imageURL
+            
+            self.present(itemVC, animated: true, completion: nil)
         }
     }
     

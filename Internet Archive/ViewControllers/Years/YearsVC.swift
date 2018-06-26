@@ -55,7 +55,7 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
                 }
                 
                 self.sortedKeys = self.sortedData.keys.sorted(by: { (a, b) -> Bool in
-                    return a < b
+                    return a > b
                 })
                 
                 self.tableView.reloadData()
@@ -110,8 +110,6 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
     }
     
     func collectionView(_ collectionView: UICollectionView, didSelectItemAt indexPath: IndexPath) {
-        let nc = self.navigationController as! BaseNC
-        
         let data = sortedData[sortedKeys[selectedRow]]![indexPath.row]
         let identifier = data["identifier"] as? String
         let title = data["title"] as? String
@@ -121,7 +119,17 @@ class YearsVC: UIViewController, UICollectionViewDataSource, UICollectionViewDel
         let mediaType = data["mediatype"] as? String
         let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(data["identifier"] as! String)")
         
-        nc.gotoItemVC(identifier: identifier, title: title, archivedBy: archivedBy, date: date, description: description, mediaType: mediaType, imageURL: imageURL)
+        let itemVC = self.storyboard?.instantiateViewController(withIdentifier: "ItemVC") as! ItemVC
+        
+        itemVC.iIdentifier = identifier
+        itemVC.iTitle = (title != nil) ? title! : ""
+        itemVC.iArchivedBy = (archivedBy != nil) ? archivedBy! : ""
+        itemVC.iDate = (date != nil) ? date! : ""
+        itemVC.iDescription = (description != nil) ? description! : ""
+        itemVC.iMediaType = (mediaType != nil) ? mediaType! : ""
+        itemVC.iImageURL = imageURL
+        
+        self.present(itemVC, animated: true, completion: nil)
     }
     
     func collectionView(_ collectionView: UICollectionView, layout collectionViewLayout: UICollectionViewLayout, sizeForItemAt indexPath: IndexPath) -> CGSize {

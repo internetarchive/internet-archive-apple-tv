@@ -148,8 +148,17 @@ class PeopleVC: UIViewController, UICollectionViewDelegate, UICollectionViewData
         let mediaType = data["mediatype"] as? String
         let imageURL = URL(string: "https://archive.org/services/get-item-image.php?identifier=\(data["identifier"] as! String)")
         
-        let nc = self.navigationController as? BaseNC
-        nc?.gotoItemVC(identifier: identifier, title: title, archivedBy: archivedBy, date: date, description: description, mediaType: mediaType, imageURL: imageURL)
+        let itemVC = self.storyboard?.instantiateViewController(withIdentifier: "ItemVC") as! ItemVC
+        
+        itemVC.iIdentifier = identifier
+        itemVC.iTitle = (title != nil) ? title! : ""
+        itemVC.iArchivedBy = (archivedBy != nil) ? archivedBy! : ""
+        itemVC.iDate = (date != nil) ? date! : ""
+        itemVC.iDescription = (description != nil) ? description! : ""
+        itemVC.iMediaType = (mediaType != nil) ? mediaType! : ""
+        itemVC.iImageURL = imageURL
+        
+        self.present(itemVC, animated: true, completion: nil)
     }
     
 }

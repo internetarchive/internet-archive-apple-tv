@@ -7,10 +7,12 @@
 //
 
 import UIKit
+import AVKit
+import AVFoundation
 import TvOSMoreButton
 import TvOSTextViewer
 
-class ItemVC: UIViewController {
+class ItemVC: UIViewController, AVPlayerViewControllerDelegate {
 
     @IBOutlet weak var btnPlay: UIButton!
     @IBOutlet weak var btnFavorite: UIButton!
@@ -39,6 +41,8 @@ class ItemVC: UIViewController {
         txtDescription.text = iDescription
         itemImage.af_setImage(withURL: iImageURL!)
         txtDescription.buttonWasPressed = onMoreButtonPressed
+        btnPlay.imageView?.contentMode = UIViewContentMode.scaleAspectFit
+        btnFavorite.imageView?.contentMode = UIViewContentMode.scaleAspectFit
     }
     
     override func viewWillAppear(_ animated: Bool) {
@@ -52,8 +56,50 @@ class ItemVC: UIViewController {
     }
 
     @IBAction func onPlay(_ sender: Any) {
-        let nc = self.navigationController as! BaseNC
-        nc.openPlayer(identifier: iIdentifier!, title: iTitle!, mediaType: iMediaType!)
+//        let nc = self.navigationController as! BaseNC
+//        nc.openPlayer(identifier: iIdentifier!, title: iTitle!, mediaType: iMediaType!)
+        
+        var filesToPlay = [[String: Any]]()
+        AppProgressHUD.sharedManager.show(view: self.view)
+        
+        APIManager.sharedManager.getMetaData(identifier: iIdentifier!) { (data, err) in
+            AppProgressHUD.sharedManager.hide()
+            
+            if let data = data {
+                for file in data["files"] as! [[String: Any]] {
+                    let filename = file["name"] as! String
+                    let ext = filename.suffix(4)
+                    
+                    if ext == ".mp4", self.iMediaType! == "movies" {
+                        filesToPlay.append(file)
+                    } else if ext == ".mp3", self.iMediaType! == "etree" {
+                        filesToPlay.append(file)
+                    }
+                }
+                
+                if filesToPlay.count == 0 {
+                    Global.showAlert(title: "Error", message: "There is no playable content", target: self)
+                    return
+                }
+                
+                let filename = filesToPlay[0]["name"] as! String
+                let url = "https://archive.org/download/\(self.iIdentifier!)/\(filename.addingPercentEncoding(withAllowedCharacters: .urlQueryAllowed)!)"
+                let mediaURL = URL(string: url)!
+                let asset = AVAsset(url: mediaURL)
+                let playerItem = AVPlayerItem(asset: asset)
+                let playerViewController = AVPlayerViewController()
+                playerViewController.delegate = self
+                
+                let player = AVPlayer(playerItem: playerItem)
+                playerViewController.player = player
+                
+                self.present(playerViewController, animated: true) {
+                    player.play()
+                }
+            } else {
+                Global.showAlert(title: "Error", message: "Error ocurred while downloading content", target: self)
+            }
+        }
     }
     
     @IBAction func onFavorite(_ sender: Any) {
@@ -91,6 +137,11 @@ class ItemVC: UIViewController {
         textViewerController.text = text
         textViewerController.textEdgeInsets = UIEdgeInsets(top: 100, left: 250, bottom: 100, right: 250)
         present(textViewerController, animated: true, completion: nil)
+    }
+    
+    func playerViewControllerShouldDismiss(_ playerViewController: AVPlayerViewController) -> Bool {
+        UIApplication.shared.isIdleTimerDisabled = false
+        return true
     }
     
     override func didReceiveMemoryWarning() {
