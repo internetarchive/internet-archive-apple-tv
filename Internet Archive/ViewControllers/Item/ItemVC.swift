@@ -222,11 +222,13 @@ class ItemVC: UIViewController, AVPlayerViewControllerDelegate, AVAudioPlayerDel
     
         player.updateMeters()
         let ALPHA: Double = 1.05
-        let averagePower: Double =  Double(player.averagePower(forChannel: 0))
-        let averagePowerForChannel: Double = pow(10, (0.05 * averagePower))
+        let averagePowerForChannel: Double = pow(10, (0.05 * Double(player.averagePower(forChannel: 0))))
         lowPassResult = ALPHA * averagePowerForChannel + (1.0 - ALPHA) * lowPassResult
         let averagePowerForChannel1: Double = pow(10, (0.05 * Double(player.averagePower(forChannel: 1))))
         lowPassResults1 = ALPHA * averagePowerForChannel1 + (1.0 - ALPHA) * lowPassResults1
+        
+        print("lowPassResult: \(lowPassResult)")
+        print("lowPassResult1: \(lowPassResults1)")
         audioVisualizer.animate(withChannel0Level: self._normalizedPowerLevelFromDecibels(player.averagePower(forChannel: 0)), andChannel1Level: self._normalizedPowerLevelFromDecibels(player.averagePower(forChannel: 1)))
         self.slider.set(value: (self.player.currentItem?.currentTime().seconds)!, animated: true)
         
