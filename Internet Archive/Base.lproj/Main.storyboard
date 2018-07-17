@@ -655,16 +655,8 @@
                                     <action selector="onFavorite:" destination="IlL-F0-NG9" eventType="primaryActionTriggered" id="ajm-jx-oF2"/>
                                 </connections>
                             </button>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="oFL-Pw-1Zl">
-                                <rect key="frame" x="1520" y="830" width="300" height="100"/>
-                                <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
-                                <constraints>
-                                    <constraint firstAttribute="height" constant="100" id="Kbp-tH-n7g"/>
-                                    <constraint firstAttribute="width" constant="300" id="SZb-sp-QSe"/>
-                                </constraints>
-                            </view>
-                            <view contentMode="scaleToFill" translatesAutoresizingMaskIntoConstraints="NO" id="i6S-0L-18M" customClass="Slider" customModule="Internet_Archive">
-                                <rect key="frame" x="620" y="810" width="820" height="120"/>
+                            <view contentMode="scaleToFill" ambiguous="YES" translatesAutoresizingMaskIntoConstraints="NO" id="i6S-0L-18M" customClass="Slider" customModule="Internet_Archive">
+                                <rect key="frame" x="570" y="810" width="1270" height="120"/>
                                 <color key="backgroundColor" white="0.0" alpha="0.0" colorSpace="custom" customColorSpace="genericGamma22GrayColorSpace"/>
                                 <constraints>
                                     <constraint firstAttribute="height" constant="120" id="ajC-Fb-jBc"/>
@@ -674,9 +666,6 @@
                         <color key="backgroundColor" red="0.3263024014" green="0.42587852199999998" blue="0.67011024750000003" alpha="1" colorSpace="custom" customColorSpace="sRGB"/>
                         <constraints>
                             <constraint firstItem="aup-oI-vyT" firstAttribute="leading" secondItem="swD-4Z-bcL" secondAttribute="leading" constant="100" id="17e-f0-eBs"/>
-                            <constraint firstAttribute="trailing" secondItem="oFL-Pw-1Zl" secondAttribute="trailing" constant="100" id="57Q-y3-YrM"/>
-                            <constraint firstAttribute="bottom" secondItem="oFL-Pw-1Zl" secondAttribute="bottom" constant="150" id="9FI-u5-hqm"/>
-                            <constraint firstItem="oFL-Pw-1Zl" firstAttribute="leading" secondItem="i6S-0L-18M" secondAttribute="trailing" constant="30" id="9ml-qm-S0b"/>
                             <constraint firstItem="UXv-NV-8pA" firstAttribute="top" secondItem="swD-4Z-bcL" secondAttribute="top" constant="100" id="GOJ-Px-crc"/>
                             <constraint firstItem="i6S-0L-18M" firstAttribute="leading" secondItem="fgN-UY-LaF" secondAttribute="trailing" constant="30" id="ORU-nb-Hto"/>
                             <constraint firstItem="oHA-yS-gNz" firstAttribute="leading" secondItem="swD-4Z-bcL" secondAttribute="leading" constant="150" id="PYG-Em-nBf"/>
@@ -691,6 +680,7 @@
                             <constraint firstItem="n45-cf-aUC" firstAttribute="leading" secondItem="aup-oI-vyT" secondAttribute="trailing" constant="100" id="gwH-BE-cNu"/>
                             <constraint firstItem="fgN-UY-LaF" firstAttribute="leading" secondItem="oHA-yS-gNz" secondAttribute="trailing" constant="70" id="jHW-qE-l3o"/>
                             <constraint firstItem="n45-cf-aUC" firstAttribute="leading" relation="greaterThanOrEqual" secondItem="gTj-0p-dfq" secondAttribute="trailing" constant="8" symbolic="YES" id="jSq-oN-5u7"/>
+                            <constraint firstAttribute="trailing" secondItem="i6S-0L-18M" secondAttribute="trailing" constant="80" id="nhW-DX-nUv"/>
                             <constraint firstItem="n45-cf-aUC" firstAttribute="top" secondItem="swD-4Z-bcL" secondAttribute="top" constant="150" id="oF4-lP-wyD"/>
                             <constraint firstItem="gTj-0p-dfq" firstAttribute="top" secondItem="8zo-WY-PKb" secondAttribute="bottom" constant="50" id="pPN-nu-4fm"/>
                             <constraint firstItem="8zo-WY-PKb" firstAttribute="top" secondItem="UXv-NV-8pA" secondAttribute="bottom" constant="50" id="rs0-Ag-Oy5"/>
@@ -709,7 +699,6 @@
                         <outlet property="txtDate" destination="gTj-0p-dfq" id="cP4-jT-PnR"/>
                         <outlet property="txtDescription" destination="aup-oI-vyT" id="9jG-Lp-G9N"/>
                         <outlet property="txtTitle" destination="UXv-NV-8pA" id="KsE-tn-vVj"/>
-                        <outlet property="visualizerView" destination="oFL-Pw-1Zl" id="kCY-oU-P6n"/>
                     </connections>
                 </viewController>
                 <placeholder placeholderIdentifier="IBFirstResponder" id="VE1-QE-lsa" userLabel="First Responder" sceneMemberID="firstResponder"/>

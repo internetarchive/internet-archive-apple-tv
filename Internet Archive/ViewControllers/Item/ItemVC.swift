@@ -21,7 +21,6 @@ class ItemVC: UIViewController, AVPlayerViewControllerDelegate, AVAudioPlayerDel
     @IBOutlet weak var txtDate: UILabel!
     @IBOutlet weak var txtDescription: TvOSMoreButton!
     @IBOutlet weak var itemImage: UIImageView!
-    @IBOutlet weak var visualizerView: UIView!
     @IBOutlet weak var slider: Slider!
     
     var iIdentifier: String?
@@ -32,12 +31,7 @@ class ItemVC: UIViewController, AVPlayerViewControllerDelegate, AVAudioPlayerDel
     var iImageURL: URL?
     var iMediaType: String?
     
-    let visualizerAnimationDuration = 0.01
-    var lowPassResults1:Double! = 0.0
-    var lowPassResult:Double! = 0.0
-    var audioVisualizer: ATAudioVisualizer!
     var player: AVPlayer!
-    var visualizerTimer: Timer! = Timer()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -52,10 +46,7 @@ class ItemVC: UIViewController, AVPlayerViewControllerDelegate, AVAudioPlayerDel
         txtDescription.buttonWasPressed = onMoreButtonPressed
         btnPlay.imageView?.contentMode = UIViewContentMode.scaleAspectFit
         btnFavorite.imageView?.contentMode = UIViewContentMode.scaleAspectFit
-        
-        self.initObservers()
-        self.initAudioVisualizer()
-        self.visualizerView.isHidden = true
+
         self.slider.isHidden = true
         self.slider.delegate = self
     }
@@ -73,7 +64,6 @@ class ItemVC: UIViewController, AVPlayerViewControllerDelegate, AVAudioPlayerDel
     @IBAction func onPlay(_ sender: Any) {
         if self.btnPlay.tag == 1 {
             stopPlyaing()
-            
             return
         }
         
@@ -163,77 +153,6 @@ class ItemVC: UIViewController, AVPlayerViewControllerDelegate, AVAudioPlayerDel
         present(textViewerController, animated: true, completion: nil)
     }
     
-    func initObservers()
-    {
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterBackground), name: NSNotification.Name.UIApplicationDidEnterBackground, object: nil)
-        NotificationCenter.default.addObserver(self, selector: #selector(self.didEnterForeground), name: NSNotification.Name.UIApplicationWillEnterForeground, object: nil)
-        
-    }
-    
-    func initAudioVisualizer() {
-        var frame = visualizerView.frame
-        frame.origin.x = 0
-        frame.origin.y = 0
-        let visualizerColor = UIColor(red: 255.0 / 255.0, green: 255.0 / 255.0, blue: 255.0 / 255.0, alpha: 1.0)
-        self.audioVisualizer = ATAudioVisualizer(barsNumber: 10, frame: frame, andColor: visualizerColor)
-        visualizerView.addSubview(audioVisualizer)
-    }
-    
-    @objc func didEnterBackground()
-    {
-        self.stopAudioVisualizer()
-    }
-    
-    @objc func didEnterForeground()
-    {
-        if self.btnPlay.tag == 1
-        {
-            self.startAudioVisualizer()
-        }
-    }
-    
-    func startAudioVisualizer() {
-        
-        if visualizerTimer != nil
-        {
-            visualizerTimer.invalidate()
-            visualizerTimer = nil
-            
-        }
-        visualizerTimer = Timer.scheduledTimer(timeInterval: visualizerAnimationDuration, target: self, selector: #selector(visualizerTimerChanged), userInfo: nil, repeats: true)
-        
-    }
-    
-    func stopAudioVisualizer()
-    {
-        if visualizerTimer != nil
-        {
-            visualizerTimer.invalidate()
-            visualizerTimer = nil
-            
-        }
-        audioVisualizer.stop()
-        
-    }
-    
-    @objc func visualizerTimerChanged(_ timer:CADisplayLink)
-    {
-        if player == nil { return }
-    
-        player.updateMeters()
-        let ALPHA: Double = 1.05
-        let averagePowerForChannel: Double = pow(10, (0.05 * Double(player.averagePower(forChannel: 0))))
-        lowPassResult = ALPHA * averagePowerForChannel + (1.0 - ALPHA) * lowPassResult
-        let averagePowerForChannel1: Double = pow(10, (0.05 * Double(player.averagePower(forChannel: 1))))
-        lowPassResults1 = ALPHA * averagePowerForChannel1 + (1.0 - ALPHA) * lowPassResults1
-        
-        print("lowPassResult: \(lowPassResult)")
-        print("lowPassResult1: \(lowPassResults1)")
-        audioVisualizer.animate(withChannel0Level: self._normalizedPowerLevelFromDecibels(player.averagePower(forChannel: 0)), andChannel1Level: self._normalizedPowerLevelFromDecibels(player.averagePower(forChannel: 1)))
-        self.slider.set(value: (self.player.currentItem?.currentTime().seconds)!, animated: true)
-        
-    }
-    
     @objc func playerDidFinishPlaying(not: NSNotification) {
         stopPlyaing()
     }
@@ -246,31 +165,26 @@ class ItemVC: UIViewController, AVPlayerViewControllerDelegate, AVAudioPlayerDel
     }
     
     func startPlaying() {
-        self.player.isMeteringEnabled = true
         self.player.play()
-        self.startAudioVisualizer()
         self.btnPlay.tag = 1
         self.btnPlay.setImage(UIImage(named: "stop.png"), for: UIControlState.normal)
         self.slider.leftLabel.text = format(forTime: 0.0)
         self.slider.max = (player.currentItem?.asset.duration.seconds)!
         self.slider.isHidden = false
-        self.visualizerView.isHidden = false
         UIApplication.shared.isIdleTimerDisabled = true
         NotificationCenter.default.addObserver(self, selector: #selector(self.playerDidFinishPlaying), name: NSNotification.Name.AVPlayerItemDidPlayToEndTime, object: player.currentItem)
     }
     
     func stopPlyaing() {
         if self.player.rate != 0 && self.player.error == nil {
-            self.player.stop()
+            self.player.pause()
         }
         
-        self.stopAudioVisualizer()
         self.btnPlay.tag = 0
         self.btnPlay.setImage(UIImage(named: "play.png"), for: UIControlState.normal)
         UIApplication.shared.isIdleTimerDisabled = false
         self.slider.set(value: 0.0, animated: false)
         self.slider.isHidden = true
-        self.visualizerView.isHidden = true
     }
     
     private func format(forTime time: Double) -> String {

@@ -9,7 +9,5 @@
 #ifndef Internet_Archive_Bridging_Header_h
 #define Internet_Archive_Bridging_Header_h
 
-#import "ATAudioVisualizer.h"
-#import "AVPlayer+ACBHelper.h"
 
 #endif /* Internet_Archive_Bridging_Header_h */
